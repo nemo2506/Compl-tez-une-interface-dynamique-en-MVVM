@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/background">
+        <shape android:shape="rectangle">
+            <solid android:color="#ffb800" />
+        </shape>
+    </item>
+    <item android:id="@+id/secondaryProgress">
+        <clip>
+            <shape android:shape="rectangle">
+                <solid android:color="#00ff00" /> <!-- Half-filled stars color -->
+            </shape>
+        </clip>
+    </item>
+    <item android:id="@+id/progress">
+        <clip>
+            <shape android:shape="rectangle">
+                <solid android:color="#0000ff" /> <!-- Filled stars color -->
+            </shape>
+        </clip>
+    </item>
+</layer-list>
