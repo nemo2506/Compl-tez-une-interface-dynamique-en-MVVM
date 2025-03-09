@@ -6,16 +6,15 @@
     android:layout_height="wrap_content"
     android:padding="8dp">
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/reviewPicture"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/circle_shape"
-        android:scaleType="centerCrop"
-        android:src="@drawable/baseline_access_time_12"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_launcher"
+        app:shapeAppearanceOverlay="@style/CircularShape"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
     <TextView
         android:id="@+id/reviewName"
@@ -29,7 +28,7 @@
         tools:text="Manon Garcia" />
 
     <RatingBar
-        android:id="@+id/reviewRatingBar"
+        android:id="@+id/reviewBar"
         style="?android:attr/ratingBarStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -56,7 +55,7 @@
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/reviewRatingBar"
+        app:layout_constraintTop_toBottomOf="@id/reviewBar"
         tools:ignore="RtlSymmetry" />
 
     <View
