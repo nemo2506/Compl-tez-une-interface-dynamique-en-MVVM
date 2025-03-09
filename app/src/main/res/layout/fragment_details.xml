@@ -125,7 +125,6 @@
             android:layout_marginTop="15dp"
             android:textColor="@android:color/darker_gray"
             android:textSize="16sp"
-            android:text="(257)"
             app:layout_constraintEnd_toEndOf="@id/tvRatingBarReview"
             app:layout_constraintStart_toStartOf="@id/tvRatingBarReview"
             app:layout_constraintTop_toBottomOf="@id/tvRatingBarReview"
