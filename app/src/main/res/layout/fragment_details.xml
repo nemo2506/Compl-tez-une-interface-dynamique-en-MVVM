@@ -29,7 +29,6 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="32dp"
             android:fontFamily="@font/jakarta_regular"
-            android:text="@string/restaurant_type"
             android:textColor="@android:color/darker_gray"
             android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -41,10 +40,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/jakarta_bold"
-            android:text="@string/restaurant_name"
+            android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="@id/tvRestaurantType"
             app:layout_constraintTop_toBottomOf="@id/tvRestaurantType"
             tools:text="Taj Mahal" />
@@ -94,12 +92,11 @@
             android:id="@+id/tvReviewMean"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:fontFamily="@font/jakarta_semibold"
-            android:text="4.0"
             android:textColor="@color/grey"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="@+id/tvRestaurantName"
             app:layout_constraintStart_toStartOf="@+id/tvRestaurantName"
             app:layout_constraintTop_toBottomOf="@+id/tvRestaurantName"
@@ -112,11 +109,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:numStars="5"
-            android:textColor="@android:color/darker_gray"
             android:progressTint="#ffb800"
             android:rating="4.0"
             android:secondaryProgressTint="#00ff00"
             android:stepSize="0.5"
+            android:textColor="@android:color/darker_gray"
             app:layout_constraintEnd_toEndOf="@id/tvReviewMean"
             app:layout_constraintStart_toStartOf="@id/tvReviewMean"
             app:layout_constraintTop_toBottomOf="@id/tvReviewMean" />
@@ -126,12 +123,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:text="(257)"
             android:textColor="@android:color/darker_gray"
             android:textSize="16sp"
+            android:text="(257)"
             app:layout_constraintEnd_toEndOf="@id/tvRatingBarReview"
             app:layout_constraintStart_toStartOf="@id/tvRatingBarReview"
-            app:layout_constraintTop_toBottomOf="@id/tvRatingBarReview" />
+            app:layout_constraintTop_toBottomOf="@id/tvRatingBarReview"
+            tools:text="(257)"/>
 
         <LinearLayout
             android:id="@+id/tvRatingBarReviewFive"
@@ -200,10 +198,10 @@
             android:textColor="@android:color/darker_gray"
             android:textSize="14sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tvTotalReview"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/tvRestaurantName" />
+            app:layout_constraintStart_toEndOf="@id/tvRestaurantName"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvTotalReview" />
 
         <View
             android:id="@+id/separator"

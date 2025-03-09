@@ -13,10 +13,9 @@ import javax.inject.Singleton;
 /**
  * This is the repository class for managing restaurant data. Repositories are responsible
  * for coordinating data operations from data sources such as network APIs, databases, etc.
- *
+ * <p>
  * Typically in an Android app built with architecture components, the repository will handle
  * the logic for deciding whether to fetch data from a network source or use data from a local cache.
- *
  *
  * @see Restaurant
  * @see RestaurantApi
@@ -39,16 +38,26 @@ public class RestaurantRepository {
 
     /**
      * Fetches the restaurant details.
-     *
+     * <p>
      * This method will make a network call using the provided {@link RestaurantApi} instance
      * to fetch restaurant data. Note that error handling and any transformations on the data
      * would need to be managed.
-     *
      *
      * @return LiveData holding the restaurant details.
      */
     public LiveData<Restaurant> getRestaurant() {
         return new MutableLiveData<>(restaurantApi.getRestaurant());
+    }
+
+    /**
+     * Fetches the size reviews.
+     * This method will make a network call using the provided {@link RestaurantApi} instance
+     * to fetch restaurant data.
+     *
+     * @return LiveData holding the restaurant details.
+     */
+    public Integer getReviewsTotal() {
+        return restaurantApi.getReviews().size();
     }
 
 }
