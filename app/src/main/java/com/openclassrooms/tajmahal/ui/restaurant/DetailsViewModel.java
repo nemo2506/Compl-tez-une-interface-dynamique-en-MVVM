@@ -65,6 +65,15 @@ public class DetailsViewModel extends ViewModel {
     }
 
     /**
+     * Total of the reviews rate by level [ 1 2 3 4 5 ] of the Taj Mahal restaurant.
+     *
+     * @return LiveData object containing the rate number of the Taj Mahal restaurant.
+     */
+    public Integer getTajMahalRateTotalByLevel(int level) {
+        return restaurantRepository.getRateTotalByLevel(level);
+    }
+
+    /**
      * Retrieves the current day of the week in French.
      *
      * @return A string representing the current day of the week in French.

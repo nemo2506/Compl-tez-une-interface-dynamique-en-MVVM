@@ -1,3 +1,12 @@
+/*
+ * Copyright (c) 2025. Copyright © 2025 Taj Mahal. Tous droits réservés.
+ *
+ * Cette application, y compris son code source, sa conception, son contenu et ses fonctionnalités, est la propriété exclusive de Taj Mahal.
+ * Toute reproduction, distribution ou utilisation non autorisée, en tout ou en partie, est strictement interdite sans l'accord écrit préalable de Taj Mahal.
+ *
+ * Développé par Marc Navarro pour Taj Mahal.
+ */
+
 package com.openclassrooms.tajmahal.data.repository;
 
 import androidx.lifecycle.LiveData;
@@ -82,4 +91,24 @@ public class RestaurantRepository {
         return (double) sum / reviews.size();
     }
 
+    /**
+     * Fetches reviews to get list of 1 2 3 4 5 notes.
+     * This method will make a network call using the provided {@link RestaurantApi} instance
+     * to fetch reviews data and get rate.
+     *
+     * @return LiveData holding the review rates mean.
+     */
+    public Integer getRateTotalByLevel(int level) {
+        List<Review> reviews = restaurantApi.getReviews();
+        if (reviews == null || reviews.isEmpty()) {
+            return (int) 0;
+        }
+        int sum = 0;
+        int total = reviews.size();
+        for (Review review : reviews) {
+            int rate = review.getRate();
+            if (rate == level) sum += 1;
+        }
+        return (int) 100 / total * sum;
+    }
 }

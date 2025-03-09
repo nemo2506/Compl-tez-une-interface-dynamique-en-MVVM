@@ -126,6 +126,12 @@ public class DetailsFragment extends Fragment {
 
         binding.tvTotalReview.setText(String.format("(%d)",detailsViewModel.getTajMahalReviewsTotal()));
         binding.tvReviewMean.setText(String.format("(%.1f)",detailsViewModel.getTajMahalReviewsMean()));
+        binding.tvRatingBarReview.setRating(Math.round(detailsViewModel.getTajMahalReviewsMean()));
+        binding.tvProgressBarScore1.setProgress(detailsViewModel.getTajMahalRateTotalByLevel(1));
+        binding.tvProgressBarScore2.setProgress(detailsViewModel.getTajMahalRateTotalByLevel(2));
+        binding.tvProgressBarScore3.setProgress(detailsViewModel.getTajMahalRateTotalByLevel(3));
+        binding.tvProgressBarScore4.setProgress(detailsViewModel.getTajMahalRateTotalByLevel(4));
+        binding.tvProgressBarScore5.setProgress(detailsViewModel.getTajMahalRateTotalByLevel(5));
     }
 
     /**
