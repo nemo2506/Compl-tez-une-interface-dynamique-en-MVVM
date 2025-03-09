@@ -124,8 +124,8 @@ public class DetailsFragment extends Fragment {
         binding.buttonPhone.setOnClickListener(v -> dialPhoneNumber(restaurant.getPhoneNumber()));
         binding.buttonWebsite.setOnClickListener(v -> openBrowser(restaurant.getWebsite()));
 
-        binding.tvReviewMean.setText("5.0");
         binding.tvTotalReview.setText(String.format("(%d)",detailsViewModel.getTajMahalReviewsTotal()));
+        binding.tvReviewMean.setText(String.format("(%.1f)",detailsViewModel.getTajMahalReviewsMean()));
     }
 
     /**

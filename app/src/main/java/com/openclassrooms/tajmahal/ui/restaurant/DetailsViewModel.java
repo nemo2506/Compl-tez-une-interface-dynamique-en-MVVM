@@ -56,6 +56,15 @@ public class DetailsViewModel extends ViewModel {
     }
 
     /**
+     * Mean of the reviews rate of the Taj Mahal restaurant.
+     *
+     * @return LiveData object containing the details of the Taj Mahal restaurant.
+     */
+    public Double getTajMahalReviewsMean() {
+        return restaurantRepository.getReviewsMean();
+    }
+
+    /**
      * Retrieves the current day of the week in French.
      *
      * @return A string representing the current day of the week in French.

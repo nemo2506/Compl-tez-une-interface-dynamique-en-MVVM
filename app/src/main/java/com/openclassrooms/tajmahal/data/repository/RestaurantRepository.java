@@ -5,6 +5,9 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.openclassrooms.tajmahal.data.service.RestaurantApi;
 import com.openclassrooms.tajmahal.domain.model.Restaurant;
+import com.openclassrooms.tajmahal.domain.model.Review;
+
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -50,14 +53,33 @@ public class RestaurantRepository {
     }
 
     /**
-     * Fetches the size reviews.
+     * Fetches reviews for size.
      * This method will make a network call using the provided {@link RestaurantApi} instance
-     * to fetch restaurant data.
+     * to fetch reviews data and get size.
      *
      * @return LiveData holding the restaurant details.
      */
     public Integer getReviewsTotal() {
         return restaurantApi.getReviews().size();
+    }
+
+    /**
+     * Fetches reviews for mean.
+     * This method will make a network call using the provided {@link RestaurantApi} instance
+     * to fetch reviews data and get rate.
+     *
+     * @return LiveData holding the review rates mean.
+     */
+    public Double getReviewsMean() {
+        List<Review> reviews = restaurantApi.getReviews();
+        if (reviews == null || reviews.isEmpty()) {
+            return (double) 0.0;
+        }
+        int sum = 0;
+        for (Review review : reviews) {
+            sum += review.getRate();
+        }
+        return (double) sum / reviews.size();
     }
 
 }
