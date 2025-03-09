@@ -9,27 +9,29 @@
 
 package com.openclassrooms.tajmahal.ui.reviews;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.openclassrooms.tajmahal.data.repository.RestaurantRepository;
-import com.openclassrooms.tajmahal.databinding.FragmentReviewsBinding;
 import com.openclassrooms.tajmahal.domain.model.Review;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.lifecycle.HiltViewModel;
+
+@HiltViewModel
 public class ReviewsViewModel extends ViewModel {
 
-    private ReviewsViewModel viewModel;
-    private FragmentReviewsBinding binding;
-    private RestaurantRepository restaurantRepository;
+    private final RestaurantRepository restaurantRepository;
 
-    public ReviewsFragment newInstance() {
-        return new ReviewsFragment();
+    @Inject
+    public ReviewsViewModel(RestaurantRepository restaurantRepository) {
+        this.restaurantRepository = restaurantRepository;
     }
 
     public List<Review> getTajMahalReviews() {
-        return (List<Review>) restaurantRepository.getReviews();
+        return restaurantRepository.getReviews();
     }
 
 }

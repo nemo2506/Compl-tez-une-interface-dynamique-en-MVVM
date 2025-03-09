@@ -109,11 +109,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:numStars="5"
-            android:progressTint="#ffb800"
-            android:rating="4.0"
-            android:secondaryProgressTint="#00ff00"
             android:stepSize="0.5"
-            android:textColor="@android:color/darker_gray"
+            android:rating="4.0"
+            android:progressTint="@color/yellow"
+            android:textColor="@color/grey"
             app:layout_constraintEnd_toEndOf="@id/tvReviewMean"
             app:layout_constraintStart_toStartOf="@id/tvReviewMean"
             app:layout_constraintTop_toBottomOf="@id/tvReviewMean" />
@@ -189,18 +188,17 @@
 
         <TextView
             android:id="@+id/tvLeaveReview"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
+            android:padding="15dp"
             android:text="@string/leave_a_review"
             android:textAlignment="viewEnd"
             android:textColor="@android:color/darker_gray"
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/tvRestaurantName"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tvTotalReview" />
+            app:layout_constraintTop_toBottomOf="@id/tvRatingBarReview" />
 
         <View
             android:id="@+id/separator"

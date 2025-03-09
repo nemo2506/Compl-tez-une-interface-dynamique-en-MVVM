@@ -1,7 +1,6 @@
 package com.openclassrooms.tajmahal.ui.reviews;
 
 import android.annotation.SuppressLint;
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,11 +12,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 
 import com.openclassrooms.tajmahal.R;
 import com.openclassrooms.tajmahal.databinding.FragmentReviewsBinding;
 import com.openclassrooms.tajmahal.domain.model.Review;
+
+import android.view.View;
 
 import java.util.List;
 
@@ -32,7 +32,6 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class ReviewsFragment extends Fragment {
     private FragmentReviewsBinding binding;
-
     private ReviewsViewModel reviewsViewModel;
 
     public static ReviewsFragment newInstance() {
@@ -52,9 +51,9 @@ public class ReviewsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_reviews, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = FragmentReviewsBinding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 
     /**
@@ -65,10 +64,18 @@ public class ReviewsFragment extends Fragment {
      * @param savedInstanceState If non-null, this fragment is being re-constructed
      *                           from a previous saved state as given here.
      */
-    @SuppressLint("SetTextI18n")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        binding.userName.setText("TEST");
+        setupViewModel();
+//        String test = reviewsViewModel.getTajMahalReviews().get(0).getUsername();
+        binding.userName.setText("Manon Garcia");
+    }
+
+    /**
+     * Initializes the ViewModel for this activity.
+     */
+    private void setupViewModel() {
+        reviewsViewModel = new ViewModelProvider(this).get(ReviewsViewModel.class);
     }
 }
