@@ -1,14 +1,14 @@
 package com.openclassrooms.tajmahal.ui.reviews;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +16,6 @@ import android.view.ViewGroup;
 import com.openclassrooms.tajmahal.R;
 import com.openclassrooms.tajmahal.databinding.FragmentReviewsBinding;
 import com.openclassrooms.tajmahal.domain.model.Review;
-
-import android.view.View;
 
 import java.util.List;
 
@@ -67,8 +65,14 @@ public class ReviewsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         setupViewModel();
-//        String test = reviewsViewModel.getTajMahalReviews().get(0).getUsername();
+
+        List<Review> reviewList = reviewsViewModel.getTajMahalReviews();
+        RecyclerView recyclerView = view.findViewById(R.id.reviewsList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
+        recyclerView.setAdapter(new ReviewAdapter(reviewList));
+
         binding.userName.setText("Manon Garcia");
     }
 
