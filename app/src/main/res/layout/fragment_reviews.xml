@@ -16,7 +16,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            app:navigationIcon="@drawable/baseline_arrow_forward_12"
+            app:navigationIcon="@drawable/ic_arrow_back"
+            android:contentDescription="@string/arrow_back"
             app:titleTextColor="@color/black"
             tools:ignore="MissingConstraints"
             tools:title="Taj Mahal" />
@@ -26,7 +27,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/ic_launcher"
-            android:contentDescription="@string/user_icon"
+            android:contentDescription="@string/user_picture"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolBar"
             app:shapeAppearanceOverlay="@style/CircularShape" />
