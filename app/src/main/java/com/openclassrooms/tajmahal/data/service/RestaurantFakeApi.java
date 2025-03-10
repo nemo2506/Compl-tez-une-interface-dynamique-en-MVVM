@@ -56,6 +56,10 @@ public class RestaurantFakeApi implements RestaurantApi {
                 true, true);
     }
 
+    public User getUser(){
+        return new User("Manon Garcia", "https://xsgames.co/randomusers/assets/avatars/female/3.jpg");
+    }
+
 
     /**
      * Retrieves a hard-coded {@link Review} object for the "Taj Mahal".
