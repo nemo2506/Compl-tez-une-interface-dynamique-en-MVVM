@@ -41,11 +41,9 @@ public class RestaurantFakeApi implements RestaurantApi {
 
     /**
      * Retrieves a hard-coded {@link Restaurant} object for the "Taj Mahal".
-     * <p>
      * This method simulates an API call by immediately returning a Restaurant object
      * with pre-defined attributes. The object represents the "Taj Mahal" restaurant
      * with specific details.
-     * </p>
      *
      * @return The hard-coded {@link Restaurant} object for the "Taj Mahal".
      */
@@ -56,6 +54,12 @@ public class RestaurantFakeApi implements RestaurantApi {
                 true, true);
     }
 
+    /**
+     * Retrieves a hard-coded {@link User} object for the "Taj Mahal".
+     * Fake to Name User Phone OR Name User TajMahal Application
+     *
+     * @return The hard-coded {@link User} object for the "Taj Mahal".
+     */
     public User getUser(){
         return new User("Manon Garcia", "https://xsgames.co/randomusers/assets/avatars/female/3.jpg");
     }
