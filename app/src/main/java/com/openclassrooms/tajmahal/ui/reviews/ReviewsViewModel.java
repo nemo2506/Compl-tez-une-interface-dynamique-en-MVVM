@@ -12,6 +12,7 @@ package com.openclassrooms.tajmahal.ui.reviews;
 import androidx.lifecycle.ViewModel;
 
 import com.openclassrooms.tajmahal.data.repository.RestaurantRepository;
+import com.openclassrooms.tajmahal.data.service.User;
 import com.openclassrooms.tajmahal.domain.model.Review;
 
 import java.util.List;
@@ -32,6 +33,10 @@ public class ReviewsViewModel extends ViewModel {
 
     public List<Review> getTajMahalReviews() {
         return restaurantRepository.getReviews();
+    }
+
+    public User getTajMahalUser() {
+        return restaurantRepository.getUser();
     }
 
 }
