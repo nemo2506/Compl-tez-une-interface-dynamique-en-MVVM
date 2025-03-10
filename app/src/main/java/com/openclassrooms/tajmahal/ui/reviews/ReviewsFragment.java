@@ -1,7 +1,5 @@
 package com.openclassrooms.tajmahal.ui.reviews;
 
-import static java.sql.DriverManager.println;
-
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -71,42 +69,66 @@ public class ReviewsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setupViewModel();
-        setReviews(view);
+        manageReview(view);
     }
 
-    private void setReviews(View view) {
+    private void manageReview(View view) {
+        setReviewsList(view);
+        setUserReview();
+        // Call your function here
+        binding.userValidate.setOnClickListener(this::userReviewValidate);
+    }
+
+    private void setUserReview() {
+        String pictureUrl = reviewsViewModel.getTajMahalUser().getPictureUrl();
+        binding.userName.setText(reviewsViewModel.getTajMahalUser().getUser());
+        binding.userPicture.setTag(pictureUrl);
+        Glide.with(binding.getRoot().getContext())
+                .load(pictureUrl)
+                .into(binding.userPicture);
+    }
+
+    /*
+    *   display old reviews { @link ReviewsViewModel }
+    */
+    private void setReviewsList(View view) {
         List<Review> reviewList = reviewsViewModel.getTajMahalReviews();
         RecyclerView recyclerView = view.findViewById(R.id.reviewsList);
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
         recyclerView.setAdapter(new ReviewAdapter(reviewList));
-
-        binding.userName.setText(reviewsViewModel.getTajMahalUser().getUser());
-        Glide.with(binding.getRoot().getContext())
-                .load(reviewsViewModel.getTajMahalUser().getPictureUrl())
-                .into(binding.userPicture);
-        // Call your function here
-        binding.userValidate.setOnClickListener(this::validateReview);
     }
 
-    /** function to manage return from user avis
+    /**
+     * function to manage return from user avis
      * verify with isReviewVerified function
      */
-    private void validateReview(View view) {
-        String successMessage = requireContext().getString(R.string.success_review_message);
+    private void userReviewValidate(View view) {
         if (!isReviewVerified()) return;
-        // Get the rating from RatingBar
-        float rating = binding.userRatingBar.getRating();
+        // Further processing (e.g., sending data to ViewModel or API)
+        reviewFakeSave();
+        // Add validation logic here (e.g., checking if fields are empty)
+
+    }
+
+    private void reviewFakeSave() {
+        String successMessage = requireContext().getString(R.string.success_review_message);
         // Get the user's name from EditText (or TextView)
         String userName = binding.userName.getText().toString().trim();
-        // Get the review text from EditText (or TextView)
+        // Get the user's picture from EditText (or TextView)
+        String userUrl = binding.userPicture.getTag().toString();
+        // Get the user's review from EditText (or TextView)
         String userReview = binding.userReviewText.getText().toString().trim();
-        // Further processing (e.g., sending data to ViewModel or API)
-
-        // Add validation logic here (e.g., checking if fields are empty)
+        // Get the rating from RatingBar
+        float userRate = binding.userRatingBar.getRating();
+        // Get the review text from EditText (or TextView)
+        Review newReview = new Review(userName, userUrl, userReview, (int) userRate);
+        Log.d("MARC", newReview.getUsername());
+        Log.d("MARC", newReview.getPicture());
         userAlert(successMessage);
     }
 
-    /** function to verify user review
+    /**
+     * function to verify user review
      * use in validateReview
      */
     private boolean isReviewVerified() {
@@ -115,15 +137,15 @@ public class ReviewsFragment extends Fragment {
         String errorRateMessage = requireContext().getString(R.string.issue_rate_empty);
         float rating = binding.userRatingBar.getRating();
         String userReview = binding.userReviewText.getText().toString().trim();
-        if(userReview.isEmpty()){
+        if (userReview.isEmpty()) {
             userAlert(errorReviewMessage);
             return false;
         }
-        if(userReview.length() <= 3){
+        if (userReview.length() <= 3) {
             userAlert(errorReviewMessageLength);
             return false;
         }
-        if(rating == 0){
+        if (rating == 0) {
             userAlert(errorRateMessage);
             return false;
         }
