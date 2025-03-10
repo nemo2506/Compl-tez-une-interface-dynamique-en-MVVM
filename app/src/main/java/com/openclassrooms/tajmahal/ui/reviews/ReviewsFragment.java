@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.openclassrooms.tajmahal.R;
@@ -87,17 +88,50 @@ public class ReviewsFragment extends Fragment {
         binding.userValidate.setOnClickListener(this::validateReview);
     }
 
+    /** function to manage return from user avis
+     * verify with isReviewVerified function
+     */
     private void validateReview(View view) {
+        String successMessage = requireContext().getString(R.string.success_review_message);
+        if (!isReviewVerified()) return;
         // Get the rating from RatingBar
         float rating = binding.userRatingBar.getRating();
         // Get the user's name from EditText (or TextView)
         String userName = binding.userName.getText().toString().trim();
         // Get the review text from EditText (or TextView)
         String userReview = binding.userReviewText.getText().toString().trim();
-        Log.d("MARC", String.valueOf(rating));
-        Log.d("MARC", userName);
-        Log.d("MARC", userReview);
         // Further processing (e.g., sending data to ViewModel or API)
+
+        // Add validation logic here (e.g., checking if fields are empty)
+        userAlert(successMessage);
+    }
+
+    /** function to verify user review
+     * use in validateReview
+     */
+    private boolean isReviewVerified() {
+        String errorReviewMessage = requireContext().getString(R.string.issue_review_empty);
+        String errorReviewMessageLength = requireContext().getString(R.string.issue_review_lenght);
+        String errorRateMessage = requireContext().getString(R.string.issue_rate_empty);
+        float rating = binding.userRatingBar.getRating();
+        String userReview = binding.userReviewText.getText().toString().trim();
+        if(userReview.isEmpty()){
+            userAlert(errorReviewMessage);
+            return false;
+        }
+        if(userReview.length() <= 3){
+            userAlert(errorReviewMessageLength);
+            return false;
+        }
+        if(rating == 0){
+            userAlert(errorRateMessage);
+            return false;
+        }
+        return true;
+    }
+
+    private void userAlert(String message) {
+        Toast.makeText(binding.getRoot().getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
 
