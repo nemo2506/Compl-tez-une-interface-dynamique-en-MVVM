@@ -1,5 +1,7 @@
 package com.openclassrooms.tajmahal.ui.reviews;
 
+import static java.sql.DriverManager.println;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,10 +11,12 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
 import com.openclassrooms.tajmahal.R;
 import com.openclassrooms.tajmahal.databinding.FragmentReviewsBinding;
 import com.openclassrooms.tajmahal.domain.model.Review;
@@ -65,16 +69,37 @@ public class ReviewsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         setupViewModel();
+        setReviews(view);
+    }
 
+    private void setReviews(View view) {
         List<Review> reviewList = reviewsViewModel.getTajMahalReviews();
         RecyclerView recyclerView = view.findViewById(R.id.reviewsList);
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
         recyclerView.setAdapter(new ReviewAdapter(reviewList));
 
-        binding.userName.setText("Manon Garcia");
+        binding.userName.setText(reviewsViewModel.getTajMahalUser().getUser());
+        Glide.with(binding.getRoot().getContext())
+                .load(reviewsViewModel.getTajMahalUser().getPictureUrl())
+                .into(binding.userPicture);
+        // Call your function here
+        binding.userValidate.setOnClickListener(this::validateReview);
     }
+
+    private void validateReview(View view) {
+        // Get the rating from RatingBar
+        float rating = binding.userRatingBar.getRating();
+        // Get the user's name from EditText (or TextView)
+        String userName = binding.userName.getText().toString().trim();
+        // Get the review text from EditText (or TextView)
+        String userReview = binding.userReviewText.getText().toString().trim();
+        Log.d("MARC", String.valueOf(rating));
+        Log.d("MARC", userName);
+        Log.d("MARC", userReview);
+        // Further processing (e.g., sending data to ViewModel or API)
+    }
+
 
     /**
      * Initializes the ViewModel for this activity.
