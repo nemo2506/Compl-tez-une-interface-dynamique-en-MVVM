@@ -27,6 +27,10 @@
     <string name="share_your_experience">Share your experience details here</string>
     <string name="user_picture">portrait of the critic</string>
     <string name="arrow_back">arrow back</string>
+    <string name="issue_review_empty">The notice must be completed</string>
+    <string name="issue_rate_empty">the note must be chosen</string>
+    <string name="issue_review_lenght">the review must be more than three letters</string>
+    <string name="success_review_message">Your review is recorded. Thank you for your feedback.</string>
 
 
 </resources>

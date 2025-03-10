@@ -26,6 +26,10 @@
     <string name="share_your_experience">Partagez ici les détails de votre expérience</string>
     <string name="user_picture">portrait du critique</string>
     <string name="arrow_back">flèche arrière</string>
+    <string name="issue_review_empty">L\'avis doit être rempli</string>
+    <string name="issue_rate_empty">la note doit être choisi</string>
+    <string name="issue_review_lenght">la critique  doit être comprendre plus de trois lettres</string>
+    <string name="success_review_message">Votre avis est enregistré. Merci de vos appréciations</string>
 
 
 </resources>
