@@ -13,6 +13,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.openclassrooms.tajmahal.data.service.RestaurantApi;
+import com.openclassrooms.tajmahal.data.service.User;
 import com.openclassrooms.tajmahal.domain.model.Restaurant;
 import com.openclassrooms.tajmahal.domain.model.Review;
 
@@ -36,7 +37,7 @@ import javax.inject.Singleton;
 public class RestaurantRepository {
 
     // The API interface instance that will be used for network requests related to restaurant data.
-    private final RestaurantApi restaurantApi;
+    private RestaurantApi restaurantApi;
 
     /**
      * Constructs a new instance of {@link RestaurantRepository} with the given {@link RestaurantApi}.
@@ -59,6 +60,19 @@ public class RestaurantRepository {
      */
     public LiveData<Restaurant> getRestaurant() {
         return new MutableLiveData<>(restaurantApi.getRestaurant());
+    }
+    
+    /**
+     * Fetches the restaurant details.
+     * <p>
+     * This method will make a network call using the provided {@link RestaurantApi} instance
+     * to fetch restaurant data. Note that error handling and any transformations on the data
+     * would need to be managed.
+     *
+     * @return LiveData holding the restaurant details.
+     */
+    public List<Review> getReviews() {
+        return restaurantApi.getReviews();
     }
 
     /**
@@ -110,5 +124,14 @@ public class RestaurantRepository {
             if (rate == level) sum += 1;
         }
         return (int) 100 / total * sum;
+    }
+
+    /**
+     * Fake Name to User TajMahal
+     * This method will make a network call using the provided {@link RestaurantApi} instance
+     * To get User Name
+     */
+    public User getUser(){
+        return restaurantApi.getUser();
     }
 }
