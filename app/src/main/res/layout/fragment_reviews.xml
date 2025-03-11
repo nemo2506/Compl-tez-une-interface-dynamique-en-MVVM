@@ -6,9 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Toolbar -->
-
-    <!-- NestedScrollView to wrap all content -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/userToolBar"
         android:layout_width="match_parent"
@@ -32,7 +29,6 @@
             android:layout_margin="20dp"
             android:orientation="vertical">
 
-            <!-- New Review Section -->
             <LinearLayout
                 android:id="@+id/newReview"
                 android:layout_width="match_parent"
@@ -100,7 +96,6 @@
                     android:background="#DADADA" />
             </LinearLayout>
 
-            <!-- User Review Section -->
             <LinearLayout
                 android:id="@+id/userEdit"
                 android:layout_width="match_parent"
@@ -189,7 +184,6 @@
                     android:background="#DADADA" />
             </LinearLayout>
 
-            <!-- Reviews List -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/reviewsList"
                 android:layout_width="match_parent"
