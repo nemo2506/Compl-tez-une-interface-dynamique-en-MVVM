@@ -17,7 +17,6 @@ import com.openclassrooms.tajmahal.data.service.User;
 import com.openclassrooms.tajmahal.domain.model.Restaurant;
 import com.openclassrooms.tajmahal.domain.model.Review;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -64,14 +63,15 @@ public class RestaurantRepository {
     }
 
     /**
-     * Fetches the restaurant details.
+     * Fetches the restaurant reviews.
      * <p>
      * This method will make a network call using the provided {@link RestaurantApi} instance
-     * to fetch restaurant data. Note that error handling and any transformations on the data
-     * would need to be managed.
+     * to fetch reviews data.
+     * nouveau list de reviews modifiable en vue du nouveau API
      *
      * @return LiveData holding the restaurant details.
      */
+
     public List<Review> getReviews() {
         return restaurantApi.getReviews();
     }
