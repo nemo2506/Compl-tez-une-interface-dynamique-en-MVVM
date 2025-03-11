@@ -76,13 +76,14 @@ public class ReviewsFragment extends Fragment {
 
     /**
      * Initializes the ViewModel for this activity.
+     * use in onViewCreated
      */
     private void setupViewModel() {
         reviewsViewModel = new ViewModelProvider(this).get(ReviewsViewModel.class);
     }
 
     /**
-     * function to manage review service
+     * function to manage execution reviews screen
      * use in onViewCreated
      */
     private void manageReview(View view) {
@@ -94,8 +95,9 @@ public class ReviewsFragment extends Fragment {
     }
 
     /**
-     * function to manage user avis
+     * function to validate user review
      * verify with isReviewVerified function
+     * use in manageReview
      */
     private void userReviewValidate(View view) {
         if (!isReviewVerified()) return;
@@ -120,7 +122,7 @@ public class ReviewsFragment extends Fragment {
     }
 
     /**
-     * function to set user in review in display user
+     * function to set user data in screen
      * use in manageReview
      */
     private void setUserReview() {
@@ -138,6 +140,7 @@ public class ReviewsFragment extends Fragment {
 
     /**
      * after click return to back screen
+     * use in setUserReview
      */
     private void onBackClick() {
         requireActivity().getSupportFragmentManager().popBackStack();
@@ -145,6 +148,7 @@ public class ReviewsFragment extends Fragment {
 
     /**
      * display actual reviews { @link ReviewsViewModel }
+     * use in manageReview
      */
     private void setActualReviews(View view, List<Review> reviews, RecyclerView recyclerView) {
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
@@ -152,7 +156,7 @@ public class ReviewsFragment extends Fragment {
     }
 
     /**
-     * function to save user review
+     * display user review in screen
      * use in userReviewValidate
      */
     private void userReviewLoad(View view) {
