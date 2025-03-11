@@ -20,6 +20,7 @@ import com.openclassrooms.tajmahal.R;
 import com.openclassrooms.tajmahal.databinding.FragmentReviewsBinding;
 import com.openclassrooms.tajmahal.domain.model.Review;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
@@ -107,10 +108,10 @@ public class ReviewsFragment extends Fragment {
      * display old reviews { @link ReviewsViewModel }
      */
     private void setReviewsList(View view) {
-        List<Review> reviewList = reviewsViewModel.getTajMahalReviews();
+        List<Review> reviews = reviewsViewModel.getTajMahalReviews();
         RecyclerView recyclerView = view.findViewById(R.id.reviewsList);
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
-        recyclerView.setAdapter(new ReviewAdapter(reviewList));
+        recyclerView.setAdapter(new ReviewAdapter(reviews));
     }
 
     /**
@@ -119,14 +120,14 @@ public class ReviewsFragment extends Fragment {
      */
     private void userReviewValidate(View view) {
         if (!isReviewVerified()) return;
-        reviewFakeSave();
+        reviewFakeSave(view);
     }
 
     /**
      * function to save user review
      * use in userReviewValidate
      */
-    private void reviewFakeSave() {
+    private void reviewFakeSave(View view) {
         String successMessage = requireContext().getString(R.string.success_review_message);
         String errorMessage = requireContext().getString(R.string.error_review_message);
         // Get the user's name from EditText (or TextView)
@@ -137,10 +138,8 @@ public class ReviewsFragment extends Fragment {
         String userReview = binding.userReviewText.getText().toString().trim();
         // Get the rating from RatingBar
         float userRate = binding.userRatingBar.getRating();
-        // Get the review text from EditText (or TextView)
-        Review newReview = new Review(userName, userUrl, userReview, (int) userRate);
         try {
-//            reviewsViewModel.updateTajMahalReviewUser(newReview);
+            userReviewDisplay();
             userAlert(successMessage);
         } catch (Exception e) {
             userAlert(errorMessage);
@@ -154,6 +153,14 @@ public class ReviewsFragment extends Fragment {
             throw new RuntimeException(e);
         }
 
+    }
+
+    private void userReviewDisplay() {
+        binding.userName.setVisibility(View.INVISIBLE);
+        binding.userPicture.setVisibility(View.INVISIBLE);
+        binding.userReviewText.setVisibility(View.INVISIBLE);
+        binding.userRatingBar.setVisibility(View.INVISIBLE);
+        binding.userValidate.setVisibility(View.INVISIBLE);
     }
 
     /**
