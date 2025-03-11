@@ -72,13 +72,28 @@ public class ReviewsFragment extends Fragment {
         manageReview(view);
     }
 
+
+    /**
+     * Initializes the ViewModel for this activity.
+     */
+    private void setupViewModel() {
+        reviewsViewModel = new ViewModelProvider(this).get(ReviewsViewModel.class);
+    }
+
+    /**
+     * function to manage review service
+     * use in onViewCreated
+     */
     private void manageReview(View view) {
         setReviewsList(view);
         setUserReview();
-        // Call your function here
         binding.userValidate.setOnClickListener(this::userReviewValidate);
     }
 
+    /**
+     * function to set user in review in display user
+     * use in manageReview
+     */
     private void setUserReview() {
         String pictureUrl = reviewsViewModel.getTajMahalUser().getPictureUrl();
         binding.userName.setText(reviewsViewModel.getTajMahalUser().getUser());
@@ -88,7 +103,7 @@ public class ReviewsFragment extends Fragment {
                 .into(binding.userPicture);
     }
 
-    /*
+    /**
     *   display old reviews { @link ReviewsViewModel }
     */
     private void setReviewsList(View view) {
@@ -104,14 +119,16 @@ public class ReviewsFragment extends Fragment {
      */
     private void userReviewValidate(View view) {
         if (!isReviewVerified()) return;
-        // Further processing (e.g., sending data to ViewModel or API)
         reviewFakeSave();
-        // Add validation logic here (e.g., checking if fields are empty)
-
     }
 
+    /**
+     * function to save user review
+     * use in userReviewValidate
+     */
     private void reviewFakeSave() {
         String successMessage = requireContext().getString(R.string.success_review_message);
+        String errorMessage = requireContext().getString(R.string.error_review_message);
         // Get the user's name from EditText (or TextView)
         String userName = binding.userName.getText().toString().trim();
         // Get the user's picture from EditText (or TextView)
@@ -122,9 +139,14 @@ public class ReviewsFragment extends Fragment {
         float userRate = binding.userRatingBar.getRating();
         // Get the review text from EditText (or TextView)
         Review newReview = new Review(userName, userUrl, userReview, (int) userRate);
-        Log.d("MARC", newReview.getUsername());
-        Log.d("MARC", newReview.getPicture());
-        userAlert(successMessage);
+        try {
+            reviewsViewModel.updateTajMahalReviewUser(newReview);
+            userAlert(successMessage);
+        } catch (Exception e) {
+            userAlert(errorMessage);
+            throw new RuntimeException(e);
+        }
+
     }
 
     /**
@@ -152,15 +174,11 @@ public class ReviewsFragment extends Fragment {
         return true;
     }
 
+    /**
+     * function to communicate on user interface
+     * use in isReviewVerified and isReviewVerified
+     */
     private void userAlert(String message) {
         Toast.makeText(binding.getRoot().getContext(), message, Toast.LENGTH_SHORT).show();
-    }
-
-
-    /**
-     * Initializes the ViewModel for this activity.
-     */
-    private void setupViewModel() {
-        reviewsViewModel = new ViewModelProvider(this).get(ReviewsViewModel.class);
     }
 }
