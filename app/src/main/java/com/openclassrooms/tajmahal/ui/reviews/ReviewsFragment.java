@@ -104,8 +104,8 @@ public class ReviewsFragment extends Fragment {
     }
 
     /**
-    *   display old reviews { @link ReviewsViewModel }
-    */
+     * display old reviews { @link ReviewsViewModel }
+     */
     private void setReviewsList(View view) {
         List<Review> reviewList = reviewsViewModel.getTajMahalReviews();
         RecyclerView recyclerView = view.findViewById(R.id.reviewsList);
@@ -140,10 +140,17 @@ public class ReviewsFragment extends Fragment {
         // Get the review text from EditText (or TextView)
         Review newReview = new Review(userName, userUrl, userReview, (int) userRate);
         try {
-            reviewsViewModel.updateTajMahalReviewUser(newReview);
+//            reviewsViewModel.updateTajMahalReviewUser(newReview);
             userAlert(successMessage);
         } catch (Exception e) {
             userAlert(errorMessage);
+            // for developer
+            try {
+                Thread.sleep(2000); // Sleep for 2000 milliseconds (2 seconds)
+            } catch (InterruptedException f) {
+                System.out.println("Sleep was interrupted!");
+            }
+            userAlert(e.toString());
             throw new RuntimeException(e);
         }
 

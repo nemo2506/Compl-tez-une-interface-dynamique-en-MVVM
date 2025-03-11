@@ -18,6 +18,7 @@ import com.openclassrooms.tajmahal.domain.model.Restaurant;
 import com.openclassrooms.tajmahal.domain.model.Review;
 
 import java.util.List;
+import java.util.concurrent.Future;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -137,14 +138,14 @@ public class RestaurantRepository {
 
     /**
      * Update New review from User
-     *
+     * Future Set to new review
      */
-    public Review updateReviewUser(Review newReview){
-        Review reviewApi = (Review) restaurantApi.getReviews();
-        reviewApi.setUsername(newReview.getUsername());
-        reviewApi.setPicture(newReview.getPicture());
-        reviewApi.setComment(newReview.getComment());
-        reviewApi.setRate(newReview.getRate());
-        return reviewApi;
-    }
+//    public List<Review> updateReviewUser(Review newReview){
+//        Future Set to new review
+//        List<Review> reviewApi = restaurantApi.getReviews();
+//        reviewApi.setUsername(newReview.getUsername());
+//        reviewApi.setPicture(newReview.getPicture());
+//        reviewApi.setComment(newReview.getComment());
+//        reviewApi.setRate(newReview.getRate());
+//    }
 }
