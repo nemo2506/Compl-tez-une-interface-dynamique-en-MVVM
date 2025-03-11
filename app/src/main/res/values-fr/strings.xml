@@ -30,6 +30,7 @@
     <string name="issue_rate_empty">la note doit être choisi</string>
     <string name="issue_review_lenght">la critique  doit être comprendre plus de trois lettres</string>
     <string name="success_review_message">Votre avis est enregistré. Merci de vos appréciations</string>
+    <string name="error_review_message">une erreur s\'est produite, veuillez réessayer plus tard</string>
 
 
 </resources>

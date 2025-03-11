@@ -31,6 +31,7 @@
     <string name="issue_rate_empty">the note must be chosen</string>
     <string name="issue_review_lenght">the review must be more than three letters</string>
     <string name="success_review_message">Your review is recorded. Thank you for your feedback.</string>
+    <string name="error_review_message">An error has occurred, please try again later</string>
 
 
 </resources>
