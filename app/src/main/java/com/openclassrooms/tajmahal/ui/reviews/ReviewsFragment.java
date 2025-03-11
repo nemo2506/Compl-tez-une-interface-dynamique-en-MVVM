@@ -1,10 +1,14 @@
 package com.openclassrooms.tajmahal.ui.reviews;
 
+import static java.sql.DriverManager.println;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -35,6 +39,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 public class ReviewsFragment extends Fragment {
     private FragmentReviewsBinding binding;
     private ReviewsViewModel reviewsViewModel;
+//    public List<Review> reviews;
 
     public static ReviewsFragment newInstance() {
         return new ReviewsFragment();
@@ -86,60 +91,25 @@ public class ReviewsFragment extends Fragment {
      * use in onViewCreated
      */
     private void manageReview(View view) {
-        setReviewsList(view);
+        List<Review> reviews = reviewsViewModel.getTajMahalReviews();
+        RecyclerView recyclerView = view.findViewById(R.id.reviewsList);
+        setActualReviews(view, reviews, recyclerView);
         setUserReview();
         binding.userValidate.setOnClickListener(this::userReviewValidate);
     }
 
     /**
-     * function to set user in review in display user
-     * use in manageReview
-     */
-    private void setUserReview() {
-        String pictureUrl = reviewsViewModel.getTajMahalUser().getPictureUrl();
-        binding.userName.setText(reviewsViewModel.getTajMahalUser().getUser());
-        binding.userPicture.setTag(pictureUrl);
-        Glide.with(binding.getRoot().getContext())
-                .load(pictureUrl)
-                .into(binding.userPicture);
-    }
-
-    /**
-     * display old reviews { @link ReviewsViewModel }
-     */
-    private void setReviewsList(View view) {
-        List<Review> reviews = reviewsViewModel.getTajMahalReviews();
-        RecyclerView recyclerView = view.findViewById(R.id.reviewsList);
-        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
-        recyclerView.setAdapter(new ReviewAdapter(reviews));
-    }
-
-    /**
-     * function to manage return from user avis
+     * function to manage user avis
      * verify with isReviewVerified function
      */
     private void userReviewValidate(View view) {
         if (!isReviewVerified()) return;
-        reviewFakeSave(view);
-    }
-
-    /**
-     * function to save user review
-     * use in userReviewValidate
-     */
-    private void reviewFakeSave(View view) {
         String successMessage = requireContext().getString(R.string.success_review_message);
         String errorMessage = requireContext().getString(R.string.error_review_message);
-        // Get the user's name from EditText (or TextView)
-        String userName = binding.userName.getText().toString().trim();
-        // Get the user's picture from EditText (or TextView)
-        String userUrl = binding.userPicture.getTag().toString();
-        // Get the user's review from EditText (or TextView)
-        String userReview = binding.userReviewText.getText().toString().trim();
-        // Get the rating from RatingBar
-        float userRate = binding.userRatingBar.getRating();
         try {
-            userReviewDisplay();
+            userEditHide();
+            userReviewLoad(view);
+            newReviewShow();
             userAlert(successMessage);
         } catch (Exception e) {
             userAlert(errorMessage);
@@ -152,15 +122,66 @@ public class ReviewsFragment extends Fragment {
             userAlert(e.toString());
             throw new RuntimeException(e);
         }
-
     }
 
-    private void userReviewDisplay() {
-        binding.userName.setVisibility(View.INVISIBLE);
-        binding.userPicture.setVisibility(View.INVISIBLE);
-        binding.userReviewText.setVisibility(View.INVISIBLE);
-        binding.userRatingBar.setVisibility(View.INVISIBLE);
-        binding.userValidate.setVisibility(View.INVISIBLE);
+    /**
+     * function to set user in review in display user
+     * use in manageReview
+     */
+    private void setUserReview() {
+        String toolBarTitle = reviewsViewModel.getTajMahalRestaurant().getName();
+        String pictureUrl = reviewsViewModel.getTajMahalUser().getPictureUrl();
+        String userName = reviewsViewModel.getTajMahalUser().getUser();
+        binding.userToolBar.setTitle(toolBarTitle);
+        binding.userName.setText(userName);
+        binding.userPicture.setTag(pictureUrl);
+        Glide.with(binding.getRoot().getContext())
+                .load(pictureUrl)
+                .into(binding.userPicture);
+        binding.userToolBar.setNavigationOnClickListener(v -> onBackClick());
+    }
+
+    /**
+     * after click return to back screen
+     */
+    private void onBackClick() {
+        requireActivity().getSupportFragmentManager().popBackStack();
+    }
+
+    /**
+     * display actual reviews { @link ReviewsViewModel }
+     */
+    private void setActualReviews(View view, List<Review> reviews, RecyclerView recyclerView) {
+        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
+        recyclerView.setAdapter(new ReviewAdapter(reviews));
+    }
+
+    /**
+     * function to save user review
+     * use in userReviewValidate
+     */
+    private void userReviewLoad(View view) {
+        String userName = binding.userName.getText().toString().trim();
+        String userUrl = binding.userPicture.getTag().toString();
+        String userReviewText = binding.userReviewText.getText().toString().trim();
+        float userRate = binding.userRatingBar.getRating();
+
+        binding.newReviewName.setText(userName);
+        Glide.with(binding.getRoot().getContext())
+                .load(userUrl)
+                .into(binding.newReviewPicture);
+        binding.newReviewBar.setRating(userRate);
+        binding.newReviewText.setText(userReviewText);
+        binding.newReviewName.setText(userName);
+    }
+
+
+    private void userEditHide() {
+        binding.userEdit.setVisibility(View.GONE);
+    }
+
+    private void newReviewShow() {
+        binding.newReview.setVisibility(View.VISIBLE);
     }
 
     /**
