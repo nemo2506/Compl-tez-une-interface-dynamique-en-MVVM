@@ -37,7 +37,7 @@ import javax.inject.Singleton;
 public class RestaurantRepository {
 
     // The API interface instance that will be used for network requests related to restaurant data.
-    private RestaurantApi restaurantApi;
+    private final RestaurantApi restaurantApi;
 
     /**
      * Constructs a new instance of {@link RestaurantRepository} with the given {@link RestaurantApi}.
@@ -133,5 +133,18 @@ public class RestaurantRepository {
      */
     public User getUser(){
         return restaurantApi.getUser();
+    }
+
+    /**
+     * Update New review from User
+     *
+     */
+    public Review updateReviewUser(Review newReview){
+        Review reviewApi = (Review) restaurantApi.getReviews();
+        reviewApi.setUsername(newReview.getUsername());
+        reviewApi.setPicture(newReview.getPicture());
+        reviewApi.setComment(newReview.getComment());
+        reviewApi.setRate(newReview.getRate());
+        return reviewApi;
     }
 }

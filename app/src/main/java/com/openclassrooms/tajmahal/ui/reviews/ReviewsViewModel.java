@@ -39,4 +39,8 @@ public class ReviewsViewModel extends ViewModel {
         return restaurantRepository.getUser();
     }
 
+    public void updateTajMahalReviewUser(Review newReview){
+        restaurantRepository.updateReviewUser(newReview);
+    }
+
 }
