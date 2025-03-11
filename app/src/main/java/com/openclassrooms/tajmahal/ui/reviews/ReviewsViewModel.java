@@ -27,6 +27,7 @@ public class ReviewsViewModel extends ViewModel {
 
     private final RestaurantRepository restaurantRepository;
 
+
     @Inject
     public ReviewsViewModel(RestaurantRepository restaurantRepository) {
         this.restaurantRepository = restaurantRepository;
