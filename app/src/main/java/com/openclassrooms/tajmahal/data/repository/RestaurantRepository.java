@@ -17,8 +17,8 @@ import com.openclassrooms.tajmahal.data.service.User;
 import com.openclassrooms.tajmahal.domain.model.Restaurant;
 import com.openclassrooms.tajmahal.domain.model.Review;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Future;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -62,7 +62,7 @@ public class RestaurantRepository {
     public LiveData<Restaurant> getRestaurant() {
         return new MutableLiveData<>(restaurantApi.getRestaurant());
     }
-    
+
     /**
      * Fetches the restaurant details.
      * <p>
@@ -132,20 +132,7 @@ public class RestaurantRepository {
      * This method will make a network call using the provided {@link RestaurantApi} instance
      * To get User Name
      */
-    public User getUser(){
+    public User getUser() {
         return restaurantApi.getUser();
     }
-
-    /**
-     * Update New review from User
-     * Future Set to new review
-     */
-//    public List<Review> updateReviewUser(Review newReview){
-//        Future Set to new review
-//        List<Review> reviewApi = restaurantApi.getReviews();
-//        reviewApi.setUsername(newReview.getUsername());
-//        reviewApi.setPicture(newReview.getPicture());
-//        reviewApi.setComment(newReview.getComment());
-//        reviewApi.setRate(newReview.getRate());
-//    }
 }

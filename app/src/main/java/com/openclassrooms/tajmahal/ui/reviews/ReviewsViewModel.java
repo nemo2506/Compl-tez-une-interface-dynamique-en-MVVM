@@ -38,13 +38,4 @@ public class ReviewsViewModel extends ViewModel {
     public User getTajMahalUser() {
         return restaurantRepository.getUser();
     }
-
-    /**
-     * Update New review from User
-     * Future Set to new review
-     */
-//    public void updateTajMahalReviewUser(Review newReview){
-//        restaurantRepository.updateReviewUser(newReview);
-//    }
-
 }
