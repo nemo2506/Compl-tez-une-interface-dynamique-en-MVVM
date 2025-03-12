@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -20,81 +19,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/actionBarSize"
-        android:fillViewport="true"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:orientation="vertical">
-
-            <LinearLayout
-                android:id="@+id/newReview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:id="@+id/newReviewPicture"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:contentDescription="@string/user_picture"
-                        android:src="@drawable/ic_launcher"
-                        app:shapeAppearanceOverlay="@style/CircularShape" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/newReviewName"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textStyle="bold"
-                            tools:text="Manon Garcia" />
-
-                        <RatingBar
-                            android:id="@+id/newReviewBar"
-                            style="?android:attr/ratingBarStyleSmall"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginTop="15dp"
-                            android:isIndicator="false"
-                            android:numStars="5"
-                            android:progressTint="@color/yellow"
-                            android:rating="1.0"
-                            android:scaleX="1.5"
-                            android:scaleY="1.5"
-                            android:stepSize="1.0" />
-                    </LinearLayout>
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/newReviewText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="20dp"
-                    android:textSize="15sp"
-                    android:hint="@string/share_your_experience" />
-
-                <View
-                    android:id="@+id/newSeparator"
-                    android:layout_width="match_parent"
-                    android:layout_height="0.60dp"
-                    android:layout_marginTop="20dp"
-                    android:background="#DADADA" />
-            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/userEdit"
@@ -125,7 +57,8 @@
                             android:id="@+id/userName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textStyle="bold"
+                            android:fontFamily="@font/jakarta_bold"
+                            android:textColor="@color/black"
                             tools:text="Manon Garcia" />
 
                         <RatingBar
@@ -141,7 +74,8 @@
                             android:rating="1.0"
                             android:scaleX="1.5"
                             android:scaleY="1.5"
-                            android:stepSize="1.0" />
+                            android:stepSize="1.0"
+                            android:textColor="@color/grey" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -167,12 +101,15 @@
                     android:layout_marginTop="20dp"
                     android:autofillHints=""
                     android:background="@drawable/edit_border"
+                    android:fontFamily="@font/jakarta_regular"
                     android:gravity="top"
                     android:hint="@string/share_your_experience"
                     android:inputType=""
                     android:minHeight="60dp"
                     android:paddingStart="5dp"
                     android:paddingTop="5dp"
+                    android:textColor="@color/grey"
+                    android:textColorHint="@color/grey"
                     android:textSize="15sp"
                     tools:ignore="RtlSymmetry" />
 
