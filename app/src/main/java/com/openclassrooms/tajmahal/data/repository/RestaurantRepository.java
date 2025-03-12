@@ -49,7 +49,6 @@ public class RestaurantRepository {
     @Inject
     public RestaurantRepository(RestaurantApi restaurantApi) {
         this.restaurantApi = restaurantApi;
-        RestaurantApi reviews = (RestaurantApi) restaurantApi.getReviews();
     }
 
     /**
@@ -148,7 +147,7 @@ public class RestaurantRepository {
      *
      * @return The {@link Review } object containing all the reviews of the restaurant.
      */
-    public LiveData<List<Review>> getLiveReviews() {
+    public LiveData<ArrayList<Review>> getLiveReviews() {
         List<Review> actualReviews = restaurantApi.getReviews();
         ArrayList<Review> mutableReviews = new ArrayList<>(actualReviews);
         return new MutableLiveData<>(mutableReviews);

@@ -1,6 +1,9 @@
 package com.openclassrooms.tajmahal.ui.reviews;
 
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,6 +13,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
+import android.view.Window;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +25,7 @@ import com.openclassrooms.tajmahal.R;
 import com.openclassrooms.tajmahal.databinding.FragmentReviewsBinding;
 import com.openclassrooms.tajmahal.domain.model.Review;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
@@ -34,7 +40,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 public class ReviewsFragment extends Fragment {
     private FragmentReviewsBinding binding;
     private ReviewsViewModel reviewsViewModel;
-//    public List<Review> reviews;
+    private View view;
 
     public static ReviewsFragment newInstance() {
         return new ReviewsFragment();
@@ -54,6 +60,7 @@ public class ReviewsFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_reviews, container, false);
         binding = FragmentReviewsBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
@@ -69,10 +76,23 @@ public class ReviewsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        setupUI();
         setupViewModel();
-        manageReview(view);
+//        manageReview(view);
+        reviewsViewModel.getTajMahalLiveReviews().observe(requireActivity(), this::updateUIWithReviews); // Observes changes in the restaurant data and updates the UI accordingly.
     }
 
+    /**
+     * Sets up the UI-specific properties, such as system UI flags and status bar color.
+     */
+
+    private void setupUI() {
+        Window window = requireActivity().getWindow();
+        window.getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+        );
+        window.setStatusBarColor(Color.TRANSPARENT);
+    }
 
     /**
      * Initializes the ViewModel for this activity.
@@ -88,10 +108,24 @@ public class ReviewsFragment extends Fragment {
      */
     private void manageReview(View view) {
         List<Review> reviews = reviewsViewModel.getTajMahalReviews();
-        RecyclerView recyclerView = view.findViewById(R.id.reviewsList);
-        setActualReviews(view, reviews, recyclerView);
+        setActualReviews(reviews);
         setUserReview();
         binding.userValidate.setOnClickListener(this::userReviewValidate);
+    }
+
+    @SuppressLint("DefaultLocale")
+    private void updateUIWithReviews(ArrayList<Review> reviews) {
+        if (reviews == null) return;
+
+//        ArrayList<Review> actualReviews = reviewsViewModel.getTajMahalLiveReviews().getValue();
+        for (Review review : reviews) {
+            Log.e("MARC", "updateUIWithReviews: " + review.getUsername());
+        }
+
+        setActualReviews(reviews);
+        setUserReview();
+        binding.userValidate.setOnClickListener(this::userReviewValidate);
+
     }
 
     /**
@@ -150,7 +184,8 @@ public class ReviewsFragment extends Fragment {
      * display actual reviews { @link ReviewsViewModel }
      * use in manageReview
      */
-    private void setActualReviews(View view, List<Review> reviews, RecyclerView recyclerView) {
+    private void setActualReviews(List<Review> reviews) {
+        RecyclerView recyclerView = this.view.findViewById(R.id.reviewsList);
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
         recyclerView.setAdapter(new ReviewAdapter(reviews));
     }
@@ -172,6 +207,8 @@ public class ReviewsFragment extends Fragment {
         binding.newReviewBar.setRating(userRate);
         binding.newReviewText.setText(userReviewText);
         binding.newReviewName.setText(userName);
+//        binding.newReviewName.setTextColor(Color.parseColor("#555555"));
+//        binding.newReviewText.setTextColor(Color.parseColor("#555555"));
     }
 
 
