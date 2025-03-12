@@ -25,6 +25,7 @@ import com.openclassrooms.tajmahal.R;
 import com.openclassrooms.tajmahal.databinding.FragmentReviewsBinding;
 import com.openclassrooms.tajmahal.domain.model.Review;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,7 +61,6 @@ public class ReviewsFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_reviews, container, false);
         binding = FragmentReviewsBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
@@ -76,9 +76,9 @@ public class ReviewsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        this.view = view;
         setupUI();
         setupViewModel();
-//        manageReview(view);
         reviewsViewModel.getTajMahalLiveReviews().observe(requireActivity(), this::updateUIWithReviews); // Observes changes in the restaurant data and updates the UI accordingly.
     }
 
@@ -101,29 +101,16 @@ public class ReviewsFragment extends Fragment {
     private void setupViewModel() {
         reviewsViewModel = new ViewModelProvider(this).get(ReviewsViewModel.class);
     }
-
+    
     /**
-     * function to manage execution reviews screen
+     * function to manage reviews UI
      * use in onViewCreated
      */
-    private void manageReview(View view) {
-        List<Review> reviews = reviewsViewModel.getTajMahalReviews();
-        setActualReviews(reviews);
-        setUserReview();
-        binding.userValidate.setOnClickListener(this::userReviewValidate);
-    }
-
     @SuppressLint("DefaultLocale")
     private void updateUIWithReviews(ArrayList<Review> reviews) {
         if (reviews == null) return;
-
-//        ArrayList<Review> actualReviews = reviewsViewModel.getTajMahalLiveReviews().getValue();
-        for (Review review : reviews) {
-            Log.e("MARC", "updateUIWithReviews: " + review.getUsername());
-        }
-
-        setActualReviews(reviews);
-        setUserReview();
+        setReviewUserUI();
+        setActualReviewsUI(reviews);
         binding.userValidate.setOnClickListener(this::userReviewValidate);
 
     }
@@ -131,16 +118,16 @@ public class ReviewsFragment extends Fragment {
     /**
      * function to validate user review
      * verify with isReviewVerified function
-     * use in manageReview
+     * use in updateUIWithReviews
      */
     private void userReviewValidate(View view) {
         if (!isReviewVerified()) return;
         String successMessage = requireContext().getString(R.string.success_review_message);
         String errorMessage = requireContext().getString(R.string.error_review_message);
         try {
-            userEditHide();
-            userReviewLoad(view);
-            newReviewShow();
+            userEditUIHide();
+            userReviewLoad();
+//            newReviewShow();
             userAlert(successMessage);
         } catch (Exception e) {
             userAlert(errorMessage);
@@ -157,9 +144,9 @@ public class ReviewsFragment extends Fragment {
 
     /**
      * function to set user data in screen
-     * use in manageReview
+     * use in updateUIWithReviews
      */
-    private void setUserReview() {
+    private void setReviewUserUI() {
         String toolBarTitle = reviewsViewModel.getTajMahalRestaurant().getName();
         String pictureUrl = reviewsViewModel.getTajMahalUser().getPictureUrl();
         String userName = reviewsViewModel.getTajMahalUser().getUser();
@@ -173,46 +160,46 @@ public class ReviewsFragment extends Fragment {
     }
 
     /**
+     * display actual reviews in UI
+     * use in updateUIWithReviews
+     */
+    private void setActualReviewsUI(ArrayList<Review> reviews) {
+        RecyclerView recyclerView = view.findViewById(R.id.reviewsList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
+        recyclerView.setAdapter(new ReviewAdapter(reviews));
+    }
+
+    /**
      * after click return to back screen
-     * use in setUserReview
+     * use in setReviewUserUI
      */
     private void onBackClick() {
         requireActivity().getSupportFragmentManager().popBackStack();
     }
 
     /**
-     * display actual reviews { @link ReviewsViewModel }
-     * use in manageReview
-     */
-    private void setActualReviews(List<Review> reviews) {
-        RecyclerView recyclerView = this.view.findViewById(R.id.reviewsList);
-        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
-        recyclerView.setAdapter(new ReviewAdapter(reviews));
-    }
-
-    /**
      * display user review in screen
      * use in userReviewValidate
      */
-    private void userReviewLoad(View view) {
+    private void userReviewLoad() {
         String userName = binding.userName.getText().toString().trim();
         String userUrl = binding.userPicture.getTag().toString();
         String userReviewText = binding.userReviewText.getText().toString().trim();
         float userRate = binding.userRatingBar.getRating();
 
-        binding.newReviewName.setText(userName);
-        Glide.with(binding.getRoot().getContext())
-                .load(userUrl)
-                .into(binding.newReviewPicture);
-        binding.newReviewBar.setRating(userRate);
-        binding.newReviewText.setText(userReviewText);
-        binding.newReviewName.setText(userName);
+//        binding.newReviewName.setText(userName);
+//        Glide.with(binding.getRoot().getContext())
+//                .load(userUrl)
+//                .into(binding.newReviewPicture);
+//        binding.newReviewBar.setRating(userRate);
+//        binding.newReviewText.setText(userReviewText);
+//        binding.newReviewName.setText(userName);
 //        binding.newReviewName.setTextColor(Color.parseColor("#555555"));
 //        binding.newReviewText.setTextColor(Color.parseColor("#555555"));
     }
 
 
-    private void userEditHide() {
+    private void userEditUIHide() {
         binding.userEdit.setVisibility(View.GONE);
     }
 
