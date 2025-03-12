@@ -2,7 +2,6 @@ package com.openclassrooms.tajmahal.ui.reviews;
 
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -25,9 +24,7 @@ import com.openclassrooms.tajmahal.R;
 import com.openclassrooms.tajmahal.databinding.FragmentReviewsBinding;
 import com.openclassrooms.tajmahal.domain.model.Review;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -79,7 +76,7 @@ public class ReviewsFragment extends Fragment {
         this.view = view;
         setupUI();
         setupViewModel();
-        reviewsViewModel.getTajMahalLiveReviews().observe(requireActivity(), this::updateUIWithReviews); // Observes changes in the restaurant data and updates the UI accordingly.
+        reviewsViewModel.getTajMahalLiveReviews().observe(getViewLifecycleOwner(), this::updateUIWithReviews); // Observes changes in the restaurant data and updates the UI accordingly.
     }
 
     /**
@@ -101,7 +98,7 @@ public class ReviewsFragment extends Fragment {
     private void setupViewModel() {
         reviewsViewModel = new ViewModelProvider(this).get(ReviewsViewModel.class);
     }
-    
+
     /**
      * function to manage reviews UI
      * use in onViewCreated
@@ -125,9 +122,8 @@ public class ReviewsFragment extends Fragment {
         String successMessage = requireContext().getString(R.string.success_review_message);
         String errorMessage = requireContext().getString(R.string.error_review_message);
         try {
-            userEditUIHide();
+//            userEditUIHide();
             userReviewLoad();
-//            newReviewShow();
             userAlert(successMessage);
         } catch (Exception e) {
             userAlert(errorMessage);
@@ -186,25 +182,13 @@ public class ReviewsFragment extends Fragment {
         String userUrl = binding.userPicture.getTag().toString();
         String userReviewText = binding.userReviewText.getText().toString().trim();
         float userRate = binding.userRatingBar.getRating();
-
-//        binding.newReviewName.setText(userName);
-//        Glide.with(binding.getRoot().getContext())
-//                .load(userUrl)
-//                .into(binding.newReviewPicture);
-//        binding.newReviewBar.setRating(userRate);
-//        binding.newReviewText.setText(userReviewText);
-//        binding.newReviewName.setText(userName);
-//        binding.newReviewName.setTextColor(Color.parseColor("#555555"));
-//        binding.newReviewText.setTextColor(Color.parseColor("#555555"));
+        Review newReview = new Review(userName, userUrl, userReviewText, (int) userRate);
+        reviewsViewModel.addReview(newReview);
     }
 
 
     private void userEditUIHide() {
         binding.userEdit.setVisibility(View.GONE);
-    }
-
-    private void newReviewShow() {
-        binding.newReview.setVisibility(View.VISIBLE);
     }
 
     /**
