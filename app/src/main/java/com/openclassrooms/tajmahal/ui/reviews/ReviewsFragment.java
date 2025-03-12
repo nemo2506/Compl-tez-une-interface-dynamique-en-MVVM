@@ -12,7 +12,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.Window;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -122,19 +121,10 @@ public class ReviewsFragment extends Fragment {
         String successMessage = requireContext().getString(R.string.success_review_message);
         String errorMessage = requireContext().getString(R.string.error_review_message);
         try {
-//            userEditUIHide();
             userReviewLoad();
             userAlert(successMessage);
         } catch (Exception e) {
             userAlert(errorMessage);
-            // for developer
-            try {
-                Thread.sleep(2000); // Sleep for 2000 milliseconds (2 seconds)
-            } catch (InterruptedException f) {
-                System.out.println("Sleep was interrupted!");
-            }
-            userAlert(e.toString());
-            throw new RuntimeException(e);
         }
     }
 
@@ -186,10 +176,6 @@ public class ReviewsFragment extends Fragment {
         reviewsViewModel.addReview(newReview);
     }
 
-
-    private void userEditUIHide() {
-        binding.userEdit.setVisibility(View.GONE);
-    }
 
     /**
      * function to verify user review
