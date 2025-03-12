@@ -9,7 +9,9 @@
 
 package com.openclassrooms.tajmahal.ui.reviews;
 
-import androidx.lifecycle.LiveData;
+import android.util.Log;
+
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.openclassrooms.tajmahal.data.repository.RestaurantRepository;
@@ -28,10 +30,13 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 public class ReviewsViewModel extends ViewModel {
 
     private final RestaurantRepository restaurantRepository;
+    private final MutableLiveData<ArrayList<Review>> liveReviews = new MutableLiveData<>(new ArrayList<>());
+
 
     @Inject
     public ReviewsViewModel(RestaurantRepository restaurantRepository) {
         this.restaurantRepository = restaurantRepository;
+        liveReviews.setValue(new ArrayList<>(restaurantRepository.getReviews()));
     }
 
     public List<Review> getTajMahalReviews() {
@@ -46,7 +51,23 @@ public class ReviewsViewModel extends ViewModel {
         return restaurantRepository.getRestaurant().getValue();
     }
 
-    public LiveData<ArrayList<Review>> getTajMahalLiveReviews() {
-        return restaurantRepository.getLiveReviews();
+
+    /**
+     * Retrieves Actuals Reviews under MutableLiveData.
+     * <p>
+     * Fake User saving his review
+     * </p>
+     *
+     * @return The {@link Review } object containing all the reviews of the restaurant.
+     */
+    public MutableLiveData<ArrayList<Review>> getTajMahalLiveReviews() {
+        return liveReviews;
+    }
+
+    public void addReview(Review newReview) {
+        ArrayList<Review> currentReviews = liveReviews.getValue();
+        if (currentReviews == null) currentReviews = new ArrayList<>();
+        currentReviews.add(0, newReview);
+        liveReviews.setValue(currentReviews);
     }
 }
