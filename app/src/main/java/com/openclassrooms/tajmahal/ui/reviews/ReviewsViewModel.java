@@ -39,10 +39,6 @@ public class ReviewsViewModel extends ViewModel {
         liveReviews.setValue(new ArrayList<>(restaurantRepository.getReviews()));
     }
 
-    public List<Review> getTajMahalReviews() {
-        return restaurantRepository.getReviews();
-    }
-
     public User getTajMahalUser() {
         return restaurantRepository.getUser();
     }
@@ -70,4 +66,5 @@ public class ReviewsViewModel extends ViewModel {
         currentReviews.add(0, newReview);
         liveReviews.setValue(currentReviews);
     }
+
 }
