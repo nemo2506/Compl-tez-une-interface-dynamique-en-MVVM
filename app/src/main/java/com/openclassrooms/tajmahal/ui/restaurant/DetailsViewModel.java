@@ -8,10 +8,12 @@ import androidx.lifecycle.ViewModel;
 import com.openclassrooms.tajmahal.R;
 import com.openclassrooms.tajmahal.data.repository.RestaurantRepository;
 import com.openclassrooms.tajmahal.domain.model.Restaurant;
+import com.openclassrooms.tajmahal.domain.model.Review;
 
 import javax.inject.Inject;
 
 import java.util.Calendar;
+import java.util.List;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
 
@@ -19,13 +21,13 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
  * MainViewModel is responsible for preparing and managing the data for the {@link DetailsFragment}.
  * It communicates with the {@link RestaurantRepository} to fetch restaurant details and provides
  * utility methods related to the restaurant UI.
- *
  * This ViewModel is integrated with Hilt for dependency injection.
  */
 @HiltViewModel
 public class DetailsViewModel extends ViewModel {
 
     private final RestaurantRepository restaurantRepository;
+    List<Review> reviews;
 
     /**
      * Constructor that Hilt will use to create an instance of MainViewModel.
@@ -35,6 +37,7 @@ public class DetailsViewModel extends ViewModel {
     @Inject
     public DetailsViewModel(RestaurantRepository restaurantRepository) {
         this.restaurantRepository = restaurantRepository;
+        reviews = restaurantRepository.getReviews();
     }
 
     /**
@@ -47,30 +50,52 @@ public class DetailsViewModel extends ViewModel {
     }
 
     /**
-     * Lenght of the reviews of the Taj Mahal restaurant.
+     * Fetches reviews for size.
+     * This method will make a network call using the provided {@link RestaurantRepository } instance
+     * to fetch reviews data and get size.
      *
-     * @return LiveData object containing the details of the Taj Mahal restaurant.
+     * @return LiveData holding the restaurant details.
      */
     public Integer getTajMahalReviewsTotal() {
-        return restaurantRepository.getReviewsTotal();
+        return reviews.size();
     }
 
     /**
-     * Mean of the reviews rate of the Taj Mahal restaurant.
+     * Fetches reviews for mean.
+     * This method will make a network call using the provided {@link RestaurantRepository } instance
+     * to fetch reviews data and get rate.
      *
-     * @return LiveData object containing the details of the Taj Mahal restaurant.
+     * @return LiveData holding the review rates mean.
      */
     public Double getTajMahalReviewsMean() {
-        return restaurantRepository.getReviewsMean();
+        if (reviews == null || reviews.isEmpty()) {
+            return (double) 0.0;
+        }
+        int sum = 0;
+        for (Review review : reviews) {
+            sum += review.getRate();
+        }
+        return (double) sum / reviews.size();
     }
 
     /**
-     * Total of the reviews rate by level [ 1 2 3 4 5 ] of the Taj Mahal restaurant.
+     * Fetches reviews to get list of 1 2 3 4 5 notes.
+     * This method will make a network call using the provided {@link RestaurantRepository} instance
+     * to fetch reviews data and get rate.
      *
-     * @return LiveData object containing the rate number of the Taj Mahal restaurant.
+     * @return LiveData holding the review rates mean.
      */
     public Integer getTajMahalRateTotalByLevel(int level) {
-        return restaurantRepository.getRateTotalByLevel(level);
+        if (reviews == null || reviews.isEmpty()) {
+            return (int) 0;
+        }
+        int sum = 0;
+        int total = reviews.size();
+        for (Review review : reviews) {
+            int rate = review.getRate();
+            if (rate == level) sum += 1;
+        }
+        return (int) 100 / total * sum;
     }
 
     /**

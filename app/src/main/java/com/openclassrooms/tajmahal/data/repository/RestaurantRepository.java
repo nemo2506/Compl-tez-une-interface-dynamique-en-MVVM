@@ -17,7 +17,6 @@ import com.openclassrooms.tajmahal.data.service.User;
 import com.openclassrooms.tajmahal.domain.model.Restaurant;
 import com.openclassrooms.tajmahal.domain.model.Review;
 
-import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,57 +78,6 @@ public class RestaurantRepository {
     }
 
     /**
-     * Fetches reviews for size.
-     * This method will make a network call using the provided {@link RestaurantApi} instance
-     * to fetch reviews data and get size.
-     *
-     * @return LiveData holding the restaurant details.
-     */
-    public Integer getReviewsTotal() {
-        return restaurantApi.getReviews().size();
-    }
-
-    /**
-     * Fetches reviews for mean.
-     * This method will make a network call using the provided {@link RestaurantApi} instance
-     * to fetch reviews data and get rate.
-     *
-     * @return LiveData holding the review rates mean.
-     */
-    public Double getReviewsMean() {
-        List<Review> reviews = restaurantApi.getReviews();
-        if (reviews == null || reviews.isEmpty()) {
-            return (double) 0.0;
-        }
-        int sum = 0;
-        for (Review review : reviews) {
-            sum += review.getRate();
-        }
-        return (double) sum / reviews.size();
-    }
-
-    /**
-     * Fetches reviews to get list of 1 2 3 4 5 notes.
-     * This method will make a network call using the provided {@link RestaurantApi} instance
-     * to fetch reviews data and get rate.
-     *
-     * @return LiveData holding the review rates mean.
-     */
-    public Integer getRateTotalByLevel(int level) {
-        List<Review> reviews = restaurantApi.getReviews();
-        if (reviews == null || reviews.isEmpty()) {
-            return (int) 0;
-        }
-        int sum = 0;
-        int total = reviews.size();
-        for (Review review : reviews) {
-            int rate = review.getRate();
-            if (rate == level) sum += 1;
-        }
-        return (int) 100 / total * sum;
-    }
-
-    /**
      * Fake Name TajMahal User
      * This method will make a network call using the provided {@link RestaurantApi} instance
      * To get User Name
@@ -138,18 +86,4 @@ public class RestaurantRepository {
         return restaurantApi.getUser();
     }
 
-
-    /**
-     * Retrieves Actuals Reviews under MutableLiveData.
-     * <p>
-     * Fake User saving his review
-     * </p>
-     *
-     * @return The {@link Review } object containing all the reviews of the restaurant.
-     */
-    public LiveData<ArrayList<Review>> getLiveReviews() {
-        List<Review> actualReviews = restaurantApi.getReviews();
-        ArrayList<Review> mutableReviews = new ArrayList<>(actualReviews);
-        return new MutableLiveData<>(mutableReviews);
-    }
 }
