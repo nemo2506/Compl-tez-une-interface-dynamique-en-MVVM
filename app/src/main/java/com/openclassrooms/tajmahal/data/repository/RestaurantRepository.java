@@ -17,6 +17,8 @@ import com.openclassrooms.tajmahal.data.service.User;
 import com.openclassrooms.tajmahal.domain.model.Restaurant;
 import com.openclassrooms.tajmahal.domain.model.Review;
 
+import java.security.PublicKey;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -47,6 +49,7 @@ public class RestaurantRepository {
     @Inject
     public RestaurantRepository(RestaurantApi restaurantApi) {
         this.restaurantApi = restaurantApi;
+        RestaurantApi reviews = (RestaurantApi) restaurantApi.getReviews();
     }
 
     /**
@@ -128,11 +131,26 @@ public class RestaurantRepository {
     }
 
     /**
-     * Fake Name to User TajMahal
+     * Fake Name TajMahal User
      * This method will make a network call using the provided {@link RestaurantApi} instance
      * To get User Name
      */
     public User getUser() {
         return restaurantApi.getUser();
+    }
+
+
+    /**
+     * Retrieves Actuals Reviews under MutableLiveData.
+     * <p>
+     * Fake User saving his review
+     * </p>
+     *
+     * @return The {@link Review } object containing all the reviews of the restaurant.
+     */
+    public LiveData<List<Review>> getLiveReviews() {
+        List<Review> actualReviews = restaurantApi.getReviews();
+        ArrayList<Review> mutableReviews = new ArrayList<>(actualReviews);
+        return new MutableLiveData<>(mutableReviews);
     }
 }
