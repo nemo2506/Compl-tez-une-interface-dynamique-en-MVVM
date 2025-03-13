@@ -30,6 +30,13 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 public class ReviewsViewModel extends ViewModel {
 
     private final RestaurantRepository restaurantRepository;
+
+    /**
+     * Initialize reviews.
+     * <p>
+     * reviews to mutable list with ArrayList and MutableLiveData
+     * </p>
+     */
     private final MutableLiveData<ArrayList<Review>> liveReviews = new MutableLiveData<>(new ArrayList<>());
 
 
@@ -39,10 +46,23 @@ public class ReviewsViewModel extends ViewModel {
         liveReviews.setValue(new ArrayList<>(restaurantRepository.getReviews()));
     }
 
+    /**
+     * Retrieves user data.
+     * <p>
+     * Fake User saving his review
+     * </p>
+     *
+     * @return The {@link User } object containing data of the user.
+     */
     public User getTajMahalUser() {
         return restaurantRepository.getUser();
     }
 
+    /**
+     * Retrieves restaurant data under MutableLiveData.
+     *
+     * @return The {@link Restaurant } object containing data of the restaurant.
+     */
     public Restaurant getTajMahalRestaurant() {
         return restaurantRepository.getRestaurant().getValue();
     }
@@ -60,6 +80,9 @@ public class ReviewsViewModel extends ViewModel {
         return liveReviews;
     }
 
+    /**
+     * Adding Review to MutableLiveData Actual Reviews.
+     */
     public void addReview(Review newReview) {
         ArrayList<Review> currentReviews = liveReviews.getValue();
         if (currentReviews == null) currentReviews = new ArrayList<>();
