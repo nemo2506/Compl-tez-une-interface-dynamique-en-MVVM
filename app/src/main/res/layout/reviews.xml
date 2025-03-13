@@ -31,7 +31,8 @@
                 android:id="@+id/reviewName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
+                android:textColor="@color/grey"
+                android:fontFamily="@font/jakarta_bold"
                 tools:text="Manon Garcia" />
 
             <RatingBar
@@ -44,7 +45,7 @@
                 android:isIndicator="false"
                 android:numStars="5"
                 android:progressTint="@color/yellow"
-                android:rating="1.0"
+                android:rating="0.0"
                 android:scaleX="1.5"
                 android:scaleY="1.5"
                 android:stepSize="1.0" />
@@ -62,6 +63,8 @@
         android:hint="@string/share_your_experience"
         android:inputType=""
         android:paddingTop="20dp"
+        android:textColor="@color/grey"
+        android:fontFamily="@font/jakarta_regular"
         android:textSize="15sp" />
 
     <View

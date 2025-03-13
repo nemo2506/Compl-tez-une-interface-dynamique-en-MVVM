@@ -71,7 +71,7 @@
                             android:isIndicator="false"
                             android:numStars="5"
                             android:progressTint="@color/yellow"
-                            android:rating="1.0"
+                            android:rating="0.0"
                             android:scaleX="1.5"
                             android:scaleY="1.5"
                             android:stepSize="1.0"
