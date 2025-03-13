@@ -137,7 +137,7 @@ public class ReviewsFragment extends Fragment {
      * use in updateUIWithReviews
      */
     private void setReviewUserUI() {
-        String toolBarTitle = Objects.requireNonNull(detailsViewModel.getTajMahalRestaurant().getValue()).getName();
+        String toolBarTitle = (Objects.requireNonNull(detailsViewModel.getTajMahalRestaurant().getValue())).getName();
         String pictureUrl = reviewsViewModel.getTajMahalUser().getPictureUrl();
         String userName = reviewsViewModel.getTajMahalUser().getUser();
         binding.userToolBar.setTitle(toolBarTitle);
@@ -177,7 +177,7 @@ public class ReviewsFragment extends Fragment {
         String userReviewText = binding.userReviewText.getText().toString().trim();
         float userRate = binding.userRatingBar.getRating();
         Review newReview = new Review(userName, userUrl, userReviewText, (int) userRate);
-        reviewsViewModel.addReview(newReview);
+        reviewsViewModel.addTajMahalReview(newReview);
     }
 
 

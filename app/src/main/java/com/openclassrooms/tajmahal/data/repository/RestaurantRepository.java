@@ -13,7 +13,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.openclassrooms.tajmahal.data.service.RestaurantApi;
-import com.openclassrooms.tajmahal.data.service.User;
+import com.openclassrooms.tajmahal.domain.model.User;
 import com.openclassrooms.tajmahal.domain.model.Restaurant;
 import com.openclassrooms.tajmahal.domain.model.Review;
 
@@ -41,6 +41,14 @@ public class RestaurantRepository {
     private final RestaurantApi restaurantApi;
 
     /**
+     * Initialize reviews with cast and type.
+     * <p>
+     * reviews to mutable list with ArrayList and MutableLiveData
+     * </p>
+     */
+    private final MutableLiveData<ArrayList<Review>> liveReviews = new MutableLiveData<>(new ArrayList<>());
+
+    /**
      * Constructs a new instance of {@link RestaurantRepository} with the given {@link RestaurantApi}.
      *
      * @param restaurantApi The network API interface for fetching restaurant data.
@@ -48,6 +56,29 @@ public class RestaurantRepository {
     @Inject
     public RestaurantRepository(RestaurantApi restaurantApi) {
         this.restaurantApi = restaurantApi;
+        liveReviews.setValue(new ArrayList<>(restaurantApi.getReviews()));
+    }
+
+    /**
+     * Retrieves Actuals Reviews under MutableLiveData.
+     * <p>
+     * Fake User saving his review
+     * </p>
+     *
+     * @return The {@link Review } object containing all the reviews of the restaurant.
+     */
+    public MutableLiveData<ArrayList<Review>> getLiveReviews() {
+        return liveReviews;
+    }
+
+    /**
+     * Adding Review to MutableLiveData Actual Reviews.
+     */
+    public void addReview(Review newReview) {
+        ArrayList<Review> currentReviews = liveReviews.getValue();
+        if (currentReviews == null) currentReviews = new ArrayList<>();
+        currentReviews.add(0, newReview);
+        liveReviews.setValue(currentReviews);
     }
 
     /**

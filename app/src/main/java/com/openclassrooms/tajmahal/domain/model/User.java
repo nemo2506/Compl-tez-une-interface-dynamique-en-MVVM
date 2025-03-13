@@ -10,16 +10,16 @@
 package com.openclassrooms.tajmahal.data.service;
 
 public class User {
-    private final String user;
+    private final String userName;
     private final String pictureUrl;
 
-    public User(User user, String pictureUrl) {
-        this.user = user.toString();
+    public User(String userName, String pictureUrl) {
+        this.userName = userName;
         this.pictureUrl = pictureUrl;
     }
 
     public String getUser() {
-        return user;
+        return userName;
     }
 
     public String getPictureUrl() {

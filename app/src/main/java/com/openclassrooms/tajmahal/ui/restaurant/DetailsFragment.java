@@ -1,5 +1,7 @@
 package com.openclassrooms.tajmahal.ui.restaurant;
 
+import static java.sql.DriverManager.println;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
@@ -9,8 +11,11 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +25,7 @@ import android.widget.Toast;
 import com.openclassrooms.tajmahal.R;
 import com.openclassrooms.tajmahal.databinding.FragmentDetailsBinding;
 import com.openclassrooms.tajmahal.domain.model.Restaurant;
+import com.openclassrooms.tajmahal.ui.reviews.ReviewsFragment;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -51,22 +57,6 @@ public class DetailsFragment extends Fragment {
     }
 
     /**
-     * This method is called immediately after `onCreateView()`.
-     * Use this method to perform final initialization once the fragment views have been inflated.
-     *
-     * @param view               The View returned by `onCreateView()`.
-     * @param savedInstanceState If non-null, this fragment is being re-constructed
-     *                           from a previous saved state as given here.
-     */
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        setupUI(); // Sets up user interface components.
-        setupViewModel(); // Prepares the ViewModel for the fragment.
-        detailsViewModel.getTajMahalRestaurant().observe(requireActivity(), this::updateUIWithRestaurant); // Observes changes in the restaurant data and updates the UI accordingly.
-    }
-
-    /**
      * Creates and returns the view hierarchy associated with the fragment.
      *
      * @param inflater           The LayoutInflater object that can be used to inflate any views in the fragment.
@@ -82,6 +72,21 @@ public class DetailsFragment extends Fragment {
         return binding.getRoot(); // Returns the root view.
     }
 
+    /**
+     * This method is called immediately after `onCreateView()`.
+     * Use this method to perform final initialization once the fragment views have been inflated.
+     *
+     * @param view               The View returned by `onCreateView()`.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed
+     *                           from a previous saved state as given here.
+     */
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setupUI(); // Sets up user interface components.
+        setupViewModel(); // Prepares the ViewModel for the fragment.
+        detailsViewModel.getTajMahalRestaurant().observe(getViewLifecycleOwner(), this::updateUIWithRestaurant); // Observes changes in the restaurant data and updates the UI accordingly.
+    }
 
     /**
      * Sets up the UI-specific properties, such as system UI flags and status bar color.
@@ -132,6 +137,19 @@ public class DetailsFragment extends Fragment {
         binding.tvProgressBarScore3.setProgress(detailsViewModel.getTajMahalRateTotalByLevel(3));
         binding.tvProgressBarScore4.setProgress(detailsViewModel.getTajMahalRateTotalByLevel(4));
         binding.tvProgressBarScore5.setProgress(detailsViewModel.getTajMahalRateTotalByLevel(5));
+
+        binding.tvLeaveReview.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getParentFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                ReviewsFragment reviewsFragment = ReviewsFragment.newInstance();
+                fragmentTransaction.add(R.id.container, reviewsFragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+        });
     }
 
     /**
