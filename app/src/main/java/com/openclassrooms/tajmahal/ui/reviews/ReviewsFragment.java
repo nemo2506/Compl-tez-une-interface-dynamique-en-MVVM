@@ -22,8 +22,10 @@ import com.bumptech.glide.Glide;
 import com.openclassrooms.tajmahal.R;
 import com.openclassrooms.tajmahal.databinding.FragmentReviewsBinding;
 import com.openclassrooms.tajmahal.domain.model.Review;
+import com.openclassrooms.tajmahal.ui.restaurant.DetailsViewModel;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -37,6 +39,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 public class ReviewsFragment extends Fragment {
     private FragmentReviewsBinding binding;
     private ReviewsViewModel reviewsViewModel;
+    private DetailsViewModel detailsViewModel;
     private View view;
 
     public static ReviewsFragment newInstance() {
@@ -96,6 +99,7 @@ public class ReviewsFragment extends Fragment {
      */
     private void setupViewModel() {
         reviewsViewModel = new ViewModelProvider(this).get(ReviewsViewModel.class);
+        detailsViewModel = new ViewModelProvider(this).get(DetailsViewModel.class);
     }
 
     /**
@@ -133,7 +137,7 @@ public class ReviewsFragment extends Fragment {
      * use in updateUIWithReviews
      */
     private void setReviewUserUI() {
-        String toolBarTitle = reviewsViewModel.getTajMahalRestaurant().getName();
+        String toolBarTitle = Objects.requireNonNull(detailsViewModel.getTajMahalRestaurant().getValue()).getName();
         String pictureUrl = reviewsViewModel.getTajMahalUser().getPictureUrl();
         String userName = reviewsViewModel.getTajMahalUser().getUser();
         binding.userToolBar.setTitle(toolBarTitle);

@@ -59,16 +59,6 @@ public class ReviewsViewModel extends ViewModel {
     }
 
     /**
-     * Retrieves restaurant data under MutableLiveData.
-     *
-     * @return The {@link Restaurant } object containing data of the restaurant.
-     */
-    public Restaurant getTajMahalRestaurant() {
-        return restaurantRepository.getRestaurant().getValue();
-    }
-
-
-    /**
      * Retrieves Actuals Reviews under MutableLiveData.
      * <p>
      * Fake User saving his review
