@@ -8,6 +8,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,6 +24,7 @@ import com.bumptech.glide.Glide;
 import com.openclassrooms.tajmahal.R;
 import com.openclassrooms.tajmahal.databinding.FragmentReviewsBinding;
 import com.openclassrooms.tajmahal.domain.model.Review;
+import com.openclassrooms.tajmahal.ui.restaurant.DetailsFragment;
 import com.openclassrooms.tajmahal.ui.restaurant.DetailsViewModel;
 
 import java.util.ArrayList;
@@ -164,7 +167,12 @@ public class ReviewsFragment extends Fragment {
      * use in setReviewUserUI
      */
     private void onBackClick() {
-        requireActivity().getSupportFragmentManager().popBackStack();
+        FragmentManager fragmentManager = getParentFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        DetailsFragment detailsFragment = DetailsFragment.newInstance();
+        fragmentTransaction.add(R.id.container, detailsFragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 
     /**
