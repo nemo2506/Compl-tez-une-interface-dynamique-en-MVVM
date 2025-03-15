@@ -7,7 +7,7 @@
  * Développé par Marc Navarro pour Taj Mahal.
  */
 
-package com.openclassrooms.tajmahal.data.service;
+package com.openclassrooms.tajmahal.domain.model;
 
 public class User {
     private final String userName;
