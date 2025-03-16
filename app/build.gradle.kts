@@ -59,7 +59,7 @@ dependencies {
 
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.mockito:mockito-core:4.4.0")
-    testImplementation("androidx.test.espresso:espresso-core:3.4.0")
-    testImplementation("androidx.test.ext:junit:1.1.5")
+    testImplementation("org.mockito:mockito-inline:4.5.1")
+    testImplementation("androidx.arch.core:core-testing:2.2.0")
 }
 
