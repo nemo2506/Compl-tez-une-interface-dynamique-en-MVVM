@@ -1,49 +1,70 @@
-package com.openclassrooms.tajmahal.ui.reviews;
-
-import static org.junit.Assert.*;
+package com.openclassrooms.tajmahal;
 
 import android.content.Context;
-import android.view.LayoutInflater;
-
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.test.core.app.ApplicationProvider;
-
-
-import com.openclassrooms.tajmahal.R;
-import com.openclassrooms.tajmahal.databinding.FragmentReviewsBinding;
+import com.openclassrooms.tajmahal.ui.reviews.ReviewsFragment;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
-@RunWith(RobolectricTestRunner.class)
-@Config(manifest = "./AndroidManifest.xml")
+import static org.mockito.Mockito.*;
+
 public class ReviewsTest {
-    private ReviewsFragment fragment;
-    private FragmentReviewsBinding binding;
-    @Mock
-    private ReviewsViewModel reviewsViewModel;
+
+    private ReviewsFragment reviewsFragment;
 
     @Before
     public void setUp() {
         MockitoAnnotations.openMocks(this);
-        fragment = new ReviewsFragment();
-        binding = FragmentReviewsBinding.inflate(LayoutInflater.from(ApplicationProvider.getApplicationContext()));
-        fragment.binding = binding;
-        fragment.reviewsViewModel = reviewsViewModel;
+        reviewsFragment = Mockito.spy(new ReviewsFragment());
+        Context mockContext = mock(Context.class);
+        doReturn(mockContext).when(reviewsFragment).getContext();
+        when(mockContext.getString(R.string.issue_review_empty)).thenReturn("Review cannot be empty");
+        when(mockContext.getString(R.string.issue_review_lenght)).thenReturn("Review must be longer than 3 characters");
+        when(mockContext.getString(R.string.issue_rate_empty)).thenReturn("Rating cannot be zero");
+
+        // Stub userAlert() to prevent execution
+        doNothing().when(reviewsFragment).userAlert(anyString());
     }
 
     @Test
-    public void testCoordinatorLayoutInflation() {
-        Context context = org.robolectric.RuntimeEnvironment.application;
+    public void testEmptyReviewTriggersAlert() {
+        String emptyReview = "";
+        float validRating = 4f;
+        boolean isValid = reviewsFragment.isReviewVerified(emptyReview, validRating);
 
-        CoordinatorLayout coordinatorLayout = (CoordinatorLayout) LayoutInflater.from(context)
-                .inflate(R.layout.fragment_reviews, null);
+        assert (!isValid);
+        verify(reviewsFragment).userAlert("Review cannot be empty");
+    }
 
-        assertNotNull(coordinatorLayout);
+    @Test
+    public void testShortReviewTriggersAlert() {
+        String shortReview = "Hi";
+        float validRating = 4f;
+        boolean isValid = reviewsFragment.isReviewVerified(shortReview, validRating);
+
+        assert (!isValid);
+        verify(reviewsFragment).userAlert("Review must be longer than 3 characters");
+    }
+
+    @Test
+    public void testZeroRatingTriggersAlert() {
+        String validReview = "Amazing place!";
+        float zeroRating = 0f;
+        boolean isValid = reviewsFragment.isReviewVerified(validReview, zeroRating);
+
+        assert (!isValid);
+        verify(reviewsFragment).userAlert("Rating cannot be zero");
+    }
+
+    @Test
+    public void testValidReviewPasses() {
+        String validReview = "Great experience!";
+        float validRating = 5f;
+        boolean isValid = reviewsFragment.isReviewVerified(validReview, validRating);
+
+        assert (isValid);
+        verify(reviewsFragment, never()).userAlert(anyString()); // Ensure no alerts were shown
     }
 }
