@@ -40,9 +40,9 @@ import dagger.hilt.android.AndroidEntryPoint;
  */
 @AndroidEntryPoint
 public class ReviewsFragment extends Fragment {
-    private FragmentReviewsBinding binding;
-    private ReviewsViewModel reviewsViewModel;
-    private DetailsViewModel detailsViewModel;
+    public FragmentReviewsBinding binding;
+    public ReviewsViewModel reviewsViewModel;
+    public DetailsViewModel detailsViewModel;
     private View view;
 
     public static ReviewsFragment newInstance() {
@@ -110,7 +110,7 @@ public class ReviewsFragment extends Fragment {
      * use in onViewCreated
      */
     @SuppressLint("DefaultLocale")
-    private void updateUIWithReviews(ArrayList<Review> reviews) {
+    void updateUIWithReviews(ArrayList<Review> reviews) {
         if (reviews == null) return;
         setReviewUserUI();
         setActualReviewsUI(reviews);
@@ -120,16 +120,14 @@ public class ReviewsFragment extends Fragment {
 
     /**
      * function to validate user review
-     * verify with isReviewVerified function
+     * verify with isUserReviewLoad function
      * use in updateUIWithReviews
      */
     private void userReviewValidate(View view) {
-        if (!isReviewVerified()) return;
         String successMessage = requireContext().getString(R.string.success_review_message);
         String errorMessage = requireContext().getString(R.string.error_review_message);
         try {
-            userReviewLoad();
-            userAlert(successMessage);
+            if(isUserReviewLoad()) userAlert(successMessage);
         } catch (Exception e) {
             userAlert(errorMessage);
         }
@@ -178,14 +176,20 @@ public class ReviewsFragment extends Fragment {
     /**
      * display user review in screen
      * use in userReviewValidate
+     *
+     * @return
      */
-    private void userReviewLoad() {
+    public boolean isUserReviewLoad() {
         String userName = binding.userName.getText().toString().trim();
         String userUrl = binding.userPicture.getTag().toString();
         String userReviewText = binding.userReviewText.getText().toString().trim();
         float userRate = binding.userRatingBar.getRating();
+
+        if (!isReviewVerified(userReviewText,userRate)) return false;
+
         Review newReview = new Review(userName, userUrl, userReviewText, (int) userRate);
         reviewsViewModel.addTajMahalReview(newReview);
+        return true;
     }
 
 
@@ -193,21 +197,18 @@ public class ReviewsFragment extends Fragment {
      * function to verify user review
      * use in validateReview
      */
-    private boolean isReviewVerified() {
+    public boolean isReviewVerified(String review, float rate) {
         String errorReviewMessage = requireContext().getString(R.string.issue_review_empty);
         String errorReviewMessageLength = requireContext().getString(R.string.issue_review_lenght);
         String errorRateMessage = requireContext().getString(R.string.issue_rate_empty);
-        float rating = binding.userRatingBar.getRating();
-        String userReview = binding.userReviewText.getText().toString().trim();
-        if (userReview.isEmpty()) {
+        if (review.isEmpty()) {
             userAlert(errorReviewMessage);
             return false;
-        }
-        if (userReview.length() <= 3) {
+        } else if (review.length() <= 3) {
             userAlert(errorReviewMessageLength);
             return false;
         }
-        if (rating == 0) {
+        if (rate == 0) {
             userAlert(errorRateMessage);
             return false;
         }
