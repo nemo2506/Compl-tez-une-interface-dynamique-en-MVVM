@@ -1,7 +1,6 @@
 package com.openclassrooms.tajmahal.ui.restaurant;
 
 import android.content.Context;
-import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -16,7 +15,6 @@ import javax.inject.Inject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Objects;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
@@ -89,9 +87,9 @@ public class DetailsViewModel extends ViewModel {
      *
      * @return LiveData holding the review rates mean.
      */
-    public Integer getTajMahalRateTotalByLevel(int level) {
+    public int getTajMahalRateTotalByLevel(int level) {
         if (liveReviews == null || Objects.requireNonNull(liveReviews.getValue()).isEmpty()) {
-            return (int) 0;
+            return 0;
         }
         int sum = 0;
         double total = liveReviews.getValue().size();
@@ -99,7 +97,7 @@ public class DetailsViewModel extends ViewModel {
             int rate = review.getRate();
             if (rate == level) sum += 1;
         }
-        return (int) (sum / total * 100);
+        return (int) Math.round(sum / total * 100);
     }
 
     /**
