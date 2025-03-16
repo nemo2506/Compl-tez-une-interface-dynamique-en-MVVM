@@ -20,47 +20,47 @@ public class ReviewsTest {
         reviewsFragment = Mockito.spy(new ReviewsFragment());
         Context mockContext = mock(Context.class);
         doReturn(mockContext).when(reviewsFragment).getContext();
-        when(mockContext.getString(R.string.issue_review_empty)).thenReturn("Review cannot be empty");
-        when(mockContext.getString(R.string.issue_review_lenght)).thenReturn("Review must be longer than 3 characters");
-        when(mockContext.getString(R.string.issue_rate_empty)).thenReturn("Rating cannot be zero");
+        when(mockContext.getString(R.string.issue_review_empty)).thenReturn("L'avis doit être rempli");
+        when(mockContext.getString(R.string.issue_review_lenght)).thenReturn("la critique  doit être comprendre plus de trois lettres");
+        when(mockContext.getString(R.string.issue_rate_empty)).thenReturn("la note doit être choisi");
 
         // Stub userAlert() to prevent execution
         doNothing().when(reviewsFragment).userAlert(anyString());
     }
 
     @Test
-    public void testEmptyReviewTriggersAlert() {
+    public void testCommentaireVide() {
         String emptyReview = "";
         float validRating = 4f;
         boolean isValid = reviewsFragment.isReviewVerified(emptyReview, validRating);
 
         assert (!isValid);
-        verify(reviewsFragment).userAlert("Review cannot be empty");
+        verify(reviewsFragment).userAlert("L'avis doit être rempli");
     }
 
     @Test
-    public void testShortReviewTriggersAlert() {
+    public void testCommentaireCourt() {
         String shortReview = "Hi";
         float validRating = 4f;
         boolean isValid = reviewsFragment.isReviewVerified(shortReview, validRating);
 
         assert (!isValid);
-        verify(reviewsFragment).userAlert("Review must be longer than 3 characters");
+        verify(reviewsFragment).userAlert("la critique  doit être comprendre plus de trois lettres");
     }
 
     @Test
-    public void testZeroRatingTriggersAlert() {
-        String validReview = "Amazing place!";
+    public void testSansNote() {
+        String validReview = "Restaurant magnifique !";
         float zeroRating = 0f;
         boolean isValid = reviewsFragment.isReviewVerified(validReview, zeroRating);
 
         assert (!isValid);
-        verify(reviewsFragment).userAlert("Rating cannot be zero");
+        verify(reviewsFragment).userAlert("la note doit être choisi");
     }
 
     @Test
-    public void testValidReviewPasses() {
-        String validReview = "Great experience!";
+    public void testAvisValable() {
+        String validReview = "Moment exceptionnel!";
         float validRating = 5f;
         boolean isValid = reviewsFragment.isReviewVerified(validReview, validRating);
 
