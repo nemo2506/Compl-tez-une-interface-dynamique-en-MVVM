@@ -219,7 +219,7 @@ public class ReviewsFragment extends Fragment {
      * function to communicate on user interface
      * use in isReviewVerified and isReviewVerified
      */
-    private void userAlert(String message) {
+    public void userAlert(String message) {
         Toast.makeText(binding.getRoot().getContext(), message, Toast.LENGTH_SHORT).show();
     }
 }
