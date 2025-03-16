@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ReviewsTest {
+public class AvisEditeurTest {
 
     private ReviewsFragment reviewsFragment;
 
@@ -101,14 +101,14 @@ public class ReviewsTest {
     }
 
     @Test
-    public void testAjoutAvisEnOrdreObservable() {
+    public void testAjoutAvisEnOrdreObservableRepository() {
         // Given a new review
         Review newReview1 = new Review("John Doe", "URL1", "très bon",5);
         Review newReview2 = new Review("Johny", "URL2", "pas bon",1);
         List<Review> fakeReviews = new ArrayList<>();
         fakeReviews.add(newReview1);
         fakeReviews.add(newReview2);
-        // When adding a review
+
         restaurantRepository.addReview(newReview1);
         restaurantRepository.addReview(newReview2);
 
