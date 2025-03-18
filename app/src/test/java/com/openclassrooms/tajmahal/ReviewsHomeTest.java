@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 import static org.mockito.Mockito.*;
 
-public class AvisAccueilTest {
+public class ReviewsHomeTest {
 
     @Mock
     private RestaurantRepository restaurantRepository;
@@ -48,21 +48,21 @@ public class AvisAccueilTest {
     }
 
     @Test
-    public void testTotalAvis() {
+    public void testReviewsTotal() {
         int totalDetails = detailsViewModel.getTajMahalReviewsTotal();
 
         assert (totalDetails == 5);
     }
 
     @Test
-    public void testMoyenneNotesAvis() {
+    public void testReviewsMean() {
         double mean = detailsViewModel.getTajMahalReviewsMean();
         // Assert
         assert (mean == 4.2); // Average rating is (5+4+5+4+3)/5 = 4.2
     }
 
     @Test
-    public void testMoyenneSansAvis() {
+    public void testEmptyReviewMean() {
         ArrayList<Review> reviews = new ArrayList<>();
         when(liveReviews.getValue()).thenReturn(reviews);
         when(restaurantRepository.getLiveReviews()).thenReturn(liveReviews);
@@ -73,7 +73,7 @@ public class AvisAccueilTest {
     }
 //
     @Test
-    public void testPourCentParNiveauDe1A5() {
+    public void testPercentByLevelFrom1To5() {
         int rateTotal5 = detailsViewModel.getTajMahalRateTotalByLevel(5);
         int rateTotal4 = detailsViewModel.getTajMahalRateTotalByLevel(4);
         int rateTotal3 = detailsViewModel.getTajMahalRateTotalByLevel(3);

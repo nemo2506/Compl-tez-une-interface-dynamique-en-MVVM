@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class AvisEditeurTest {
+public class ReviewEditorTest {
 
     private ReviewsFragment reviewsFragment;
 
@@ -61,7 +61,7 @@ public class AvisEditeurTest {
     }
 
     @Test
-    public void testCommentaireVide() {
+    public void testEmptyReview() {
         String emptyReview = "";
         float validRating = 4f;
         boolean isValid = reviewsFragment.isReviewVerified(emptyReview, validRating);
@@ -71,7 +71,7 @@ public class AvisEditeurTest {
     }
 
     @Test
-    public void testCommentaireCourt() {
+    public void testShortReview() {
         String shortReview = "Hi";
         float validRating = 4f;
         boolean isValid = reviewsFragment.isReviewVerified(shortReview, validRating);
@@ -81,7 +81,7 @@ public class AvisEditeurTest {
     }
 
     @Test
-    public void testSansNote() {
+    public void testEmptyRate() {
         String validReview = "Restaurant magnifique !";
         float zeroRating = 0f;
         boolean isValid = reviewsFragment.isReviewVerified(validReview, zeroRating);
@@ -91,7 +91,7 @@ public class AvisEditeurTest {
     }
 
     @Test
-    public void testAvisValable() {
+    public void testValidReview() {
         String validReview = "Moment exceptionnel!";
         float validRating = 5f;
         boolean isValid = reviewsFragment.isReviewVerified(validReview, validRating);
@@ -101,7 +101,7 @@ public class AvisEditeurTest {
     }
 
     @Test
-    public void testAjoutAvisEnOrdreObservableRepository() {
+    public void testAddingOrderdReviewObservable() {
         // Given a new review
         Review newReview1 = new Review("John Doe", "URL1", "très bon",5);
         Review newReview2 = new Review("Johny", "URL2", "pas bon",1);
