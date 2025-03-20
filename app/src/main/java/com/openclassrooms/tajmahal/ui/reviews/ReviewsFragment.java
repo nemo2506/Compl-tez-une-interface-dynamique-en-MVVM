@@ -139,8 +139,8 @@ public class ReviewsFragment extends Fragment {
      */
     private void setReviewUserUI() {
         String toolBarTitle = (Objects.requireNonNull(detailsViewModel.getTajMahalRestaurant().getValue())).getName();
-        String pictureUrl = reviewsViewModel.getTajMahalUser().getPictureUrl();
-        String userName = reviewsViewModel.getTajMahalUser().getUser();
+        String pictureUrl = reviewsViewModel.getTajMahalUser().getUserPictureUrl();
+        String userName = reviewsViewModel.getTajMahalUser().getUserName();
         binding.userToolBar.setTitle(toolBarTitle);
         binding.userName.setText(userName);
         binding.userPicture.setTag(pictureUrl);
