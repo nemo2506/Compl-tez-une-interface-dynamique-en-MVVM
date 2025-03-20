@@ -10,19 +10,37 @@
 package com.openclassrooms.tajmahal.domain.model;
 
 public class User {
-    private final String userName;
-    private final String pictureUrl;
+    private String userName;
+    private String userPictureUrl;
+    private final String userPhone;
 
-    public User(String userName, String pictureUrl) {
+    public User(String userName, String userPictureUrl, String userPhone) {
         this.userName = userName;
-        this.pictureUrl = pictureUrl;
+        this.userPictureUrl = userPictureUrl;
+        this.userPhone = userPhone;
     }
 
-    public String getUser() {
+    public String getUserName() {
         return userName;
     }
 
-    public String getPictureUrl() {
-        return pictureUrl;
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getUserPictureUrl() {
+        return userPictureUrl;
+    }
+
+    public void setUserPictureUrl(String userPictureUrl) {
+        this.userPictureUrl = userPictureUrl;
+    }
+
+    public String getUserPhone() {
+        return userPhone;
+    }
+
+    public void setUserPhone(String userPictureUrl) {
+        this.userPictureUrl = userPictureUrl;
     }
 }
