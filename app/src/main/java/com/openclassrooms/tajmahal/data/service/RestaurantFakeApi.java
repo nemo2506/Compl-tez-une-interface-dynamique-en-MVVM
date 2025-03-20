@@ -62,7 +62,7 @@ public class RestaurantFakeApi implements RestaurantApi {
      * @return The hard-coded {@link User} object for the "Taj Mahal".
      */
     public User getUser(){
-        return new User("Manon Garcia", "https://xsgames.co/randomusers/assets/avatars/female/3.jpg");
+        return new User("Manon Garcia", "https://xsgames.co/randomusers/assets/avatars/female/3.jpg","01 02 03 04 05");
     }
 
 
