@@ -31,6 +31,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
         this.reviewList = reviewList;
     }
 
+    // Crée une nouvelle vue (View) pour un élément de la liste, en utilisant le fichier XML reviews.xml
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -38,6 +39,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
         return new ViewHolder(view);
     }
 
+    // Associe chaque élément Review aux composants de la vue (ViewHolder)
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Review review = reviewList.get(position);
@@ -49,16 +51,19 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
         holder.reviewText.setText(review.getComment());
     }
 
+    // permet au RecyclerView de savoir combien d’éléments afficher
     @Override
     public int getItemCount() {
         return reviewList.size();
     }
 
+    // Définit la structure d’un élément de la liste (RecyclerView)
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView reviewName, reviewText;
         RatingBar reviewBar;
         ShapeableImageView reviewPicture;
 
+        // contient des références aux composants graphiques
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             reviewName = itemView.findViewById(R.id.reviewName);

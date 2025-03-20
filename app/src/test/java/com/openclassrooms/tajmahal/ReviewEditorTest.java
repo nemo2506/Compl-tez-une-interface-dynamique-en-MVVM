@@ -113,11 +113,17 @@ public class ReviewEditorTest {
         restaurantRepository.addReview(newReview2);
 
         List<Review> reviews = restaurantRepository.getLiveReviews().getValue();
+        // la liste d'avis n'est pas null
         assertNotNull(reviews);
+        // la liste d'avis n'est pas vide
         assertFalse(reviews.isEmpty());
+        // la liste correspond aux avis de départ
         assertEquals(fakeReviews.size(), reviews.size());
+        // le dernier avis est en tête des avis
         assertEquals(newReview2, reviews.get(0));
+        // l'avant dernier avis se replace en second dans la liste
         assertEquals(newReview1, reviews.get(1));
+        // Observer à noter 3 changements dans Repository
         verify(observer, times(fakeReviews.size()+1)).onChanged(anyList());
     }
 }
