@@ -121,7 +121,6 @@ public class ReviewEditorTest {
         assertEquals(fakeReviews.size(), reviews.size());
         // le dernier avis est en tête des avis
         assertEquals(newReview2, reviews.get(0));
-        assertEquals(newReview2, reviews.get(0));
         // l'avant dernier avis se replace en second dans la liste
         assertEquals(newReview1, reviews.get(1));
         // Observer à noter 3 changements dans Repository
