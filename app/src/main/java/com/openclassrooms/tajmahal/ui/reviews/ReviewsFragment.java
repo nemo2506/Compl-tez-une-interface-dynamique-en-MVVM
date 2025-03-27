@@ -189,6 +189,7 @@ public class ReviewsFragment extends Fragment {
 
         Review newReview = new Review(userName, userUrl, userReviewText, (int) userRate);
         reviewsViewModel.addTajMahalReview(newReview);
+
         return true;
     }
 
